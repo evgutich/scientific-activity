@@ -1,6 +1,7 @@
 package by.it.academy.scientificactivity.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +11,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "EMPLOYEE")
 public class Employee {
 
     @Id
@@ -26,9 +28,16 @@ public class Employee {
     private String patronymic;
     private String surname;
     @Column(name = "date_of_birth")
-//    @DateTimeFormat(iso = DateTimeFormatter)
-//    @JsonFormat(pattern = "YYYY-MM-dd")
     private LocalDate dateOfBirth;
-    private String department;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Department department;
+    private String position;
+    @Enumerated(EnumType.STRING)
+    private Degree degree;
+    @Enumerated(EnumType.STRING)
+    private AcademicRank academicRank;
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Publication> publications = new ArrayList<>();
 
 }

@@ -22,18 +22,28 @@
     <table class="table text-center border">
         <thead>
         <tr>
-            <td>#</td>
-            <td>manufacturer</td>
-            <td>model</td>
-            <td>price</td>
+            <th>#</th>
+            <th>name</th>
+            <th>patronymic</th>
+            <th>surname</th>
+            <th>date of birth</th>
+            <th>department</th>
+            <th>position</th>
+            <th>degree</th>
+            <th>academic rank</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="employee : ${employees}">
             <td><span th:text="${employee.id}"></span></td>
-            <td><span th:text="${product.manufacturer}"></span></td>
-            <td><span th:text="${product.model}"></span></td>
-            <td><span th:text="${product.price}"></span></td>
+            <td><span th:text="${employee.name}"></span></td>
+            <td><span th:text="${employee.patronymic}"></span></td>
+            <td><span th:text="${employee.surname}"></span></td>
+            <td><span th:text="${employee.dateOfBirth}"></span></td>
+            <td><span th:text="${employee.department}"></span></td>
+            <td><span th:text="${employee.position}"></span></td>
+            <td><span th:text="${employee.degree}"></span></td>
+            <td><span th:text="${employee.academicRank}"></span></td>
         </tr>
         </tbody>
     </table>

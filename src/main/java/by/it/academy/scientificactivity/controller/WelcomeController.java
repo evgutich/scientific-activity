@@ -25,7 +25,6 @@ public class WelcomeController {
         return "welcome"; //view
     }
 
-    // /hello?name=kotlin
     @GetMapping("/hello")
     public String mainWithParam(
             @RequestParam(name = "name", required = false, defaultValue = "")
@@ -33,6 +32,6 @@ public class WelcomeController {
 
         model.addAttribute("message", name);
 
-        return "welcome"; //view
+        return "welcome";
     }
 }
