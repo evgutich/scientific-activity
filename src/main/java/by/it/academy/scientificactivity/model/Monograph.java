@@ -14,7 +14,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "publication_id")
 @Entity
-public class Monograph extends Publication{
+public class Monograph extends Publication {
     @Enumerated(EnumType.STRING)
     private MonographType monographType;
     private Integer printRun;

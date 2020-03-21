@@ -1,6 +1,5 @@
 package by.it.academy.scientificactivity.controller;
 
-import by.it.academy.scientificactivity.dto.CreateEditMonographRequest;
 import by.it.academy.scientificactivity.model.Employee;
 import by.it.academy.scientificactivity.model.Monograph;
 import by.it.academy.scientificactivity.model.Publication;
@@ -46,15 +45,13 @@ public class PublicationsController {
     @PostMapping(value = "/monographs/{monographId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String createPublication(@PathVariable Long employeeId,
                                     @PathVariable Long monographId,
-//                                    @ModelAttribute CreateEditMonographRequest request,
                                     @ModelAttribute Monograph monograph,
                                     Model model) {
-//        publicationService.updateMonographForEmployee(employeeId, monographId, request);
+        publicationService.updateMonographForEmployee(employeeId, monographId, monograph);
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
         model.addAttribute("monographs", publicationService.getMonographs());
         model.addAttribute("articles", publicationService.getArticles());
-        log.info("request " + monograph);
         return "redirect:/employees/" + employeeById.getId();
     }
 

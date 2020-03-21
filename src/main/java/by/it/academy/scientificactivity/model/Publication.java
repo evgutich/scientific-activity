@@ -20,7 +20,10 @@ public abstract class Publication {
     private String title;
     private String publisher;
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "publications")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "employee_publications",
+            joinColumns = {@JoinColumn(name = "publications_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authors_id")})
     private List<Employee> authors = new ArrayList<>();
     private LocalDate entryDate;
 }

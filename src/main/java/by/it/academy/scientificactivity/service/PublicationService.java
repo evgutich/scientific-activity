@@ -1,6 +1,5 @@
 package by.it.academy.scientificactivity.service;
 
-import by.it.academy.scientificactivity.dto.CreateEditMonographRequest;
 import by.it.academy.scientificactivity.model.Monograph;
 import by.it.academy.scientificactivity.model.Publication;
 
@@ -24,6 +23,6 @@ public interface PublicationService {
 
     List<Publication> getArticles();
 
-    void updateMonographForEmployee(Long employeeId, Long monographId, CreateEditMonographRequest request);
+    void updateMonographForEmployee(Long employeeId, Long monographId, Monograph monograph);
 
 }

@@ -3,7 +3,6 @@ package by.it.academy.scientificactivity.service;
 import by.it.academy.scientificactivity.model.Employee;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EmployeeService {
 

@@ -34,7 +34,8 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private AcademicRank academicRank;
     @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "authors")
+
     private List<Publication> publications = new ArrayList<>();
 
 }
