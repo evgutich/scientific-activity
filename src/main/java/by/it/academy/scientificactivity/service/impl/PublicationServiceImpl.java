@@ -50,6 +50,11 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    public List<Publication> getMonographsByAuthorId(Long id) {
+        return publicationRepository.findMonographByAuthorId(id);
+    }
+
+    @Override
     public List<Publication> getArticles() {
         return publicationRepository.findArticles();
     }

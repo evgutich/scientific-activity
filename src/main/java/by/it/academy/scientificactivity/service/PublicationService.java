@@ -20,6 +20,8 @@ public interface PublicationService {
 
     List<Publication> getMonographs();
 
+    List<Publication> getMonographsByAuthorId(Long id);
+
     List<Publication> getArticles();
 
     void updateMonographForEmployee(Long employeeId, Long monographId, CreateEditMonographRequest request);

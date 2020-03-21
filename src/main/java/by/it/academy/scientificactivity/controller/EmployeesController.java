@@ -33,12 +33,12 @@ public class EmployeesController {
         return "employees";
     }
 
-    @GetMapping("/{id}")
-    public String showEmployeeProfile(@PathVariable Long id, Model model) {
-        model.addAttribute("employee", employeeService.getEmployeeById(id));
-        model.addAttribute("monographs", publicationService.getMonographs());
+    @GetMapping("/{employeeId}")
+    public String showEmployeeProfile(@PathVariable Long employeeId, Model model) {
+        model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+        model.addAttribute("monographs", publicationService.getMonographsByAuthorId(employeeId));
         model.addAttribute("articles", publicationService.getArticles());
-        log.info("our employee: " + employeeService.getEmployeeById(id));
+        log.info("our employee: " + employeeService.getEmployeeById(employeeId));
         return "employee";
     }
 

@@ -35,20 +35,26 @@ public class PublicationsController {
         return "publications";
     }
 
-    @GetMapping("/monographs/{id}/edit")
-    public String viewMonographEditForm(@PathVariable Long employeeId, @PathVariable("id") Long monographId, Model model) {
+    @GetMapping("/monographs/{monographId}/edit")
+    public String viewMonographEditForm(@PathVariable Long employeeId, @PathVariable Long monographId, Model model) {
         model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+        model.addAttribute("employees", employeeService.getAllEmployees());
         model.addAttribute("monograph", publicationService.getPublicationById(monographId));
         return "edit-monograph";
     }
 
-    @PostMapping(value = "/monographs/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String createPublication(@PathVariable Long employeeId, @PathVariable("id") Long monographId, @ModelAttribute CreateEditMonographRequest request, Model model) {
-        publicationService.updateMonographForEmployee(employeeId, monographId, request);
+    @PostMapping(value = "/monographs/{monographId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String createPublication(@PathVariable Long employeeId,
+                                    @PathVariable Long monographId,
+//                                    @ModelAttribute CreateEditMonographRequest request,
+                                    @ModelAttribute Monograph monograph,
+                                    Model model) {
+//        publicationService.updateMonographForEmployee(employeeId, monographId, request);
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
         model.addAttribute("monographs", publicationService.getMonographs());
         model.addAttribute("articles", publicationService.getArticles());
+        log.info("request " + monograph);
         return "redirect:/employees/" + employeeById.getId();
     }
 
