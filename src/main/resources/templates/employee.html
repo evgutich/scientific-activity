@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne">
+                    monographs
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table text-center border">
+                    <thead>
+                    <tr>
+                        <th>title</th>
+                        <th>publisher</th>
+                        <th>entryDate</th>
+                        <th>monographType</th>
+                        <th>printRun</th>
+                        <th>numberOfPages</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="monograph : ${monographs}">
+                        <td>
+                            <a th:href="@{'employees/' + ${employee.id} + '/publications/monographs/' + ${monograph.id}}"><span
+                                    th:text="${monograph.title}"></span></a></td>
+                        <td><span th:text="${monograph.publisher}"></span></td>
+                        <td><span th:text="${monograph.entryDate}"></span></td>
+                        <td><span th:text="${monograph.monographType}"></span></td>
+                        <td><span th:text="${monograph.printRun}"></span></td>
+                        <td><span th:text="${monograph.numberOfPages}"></span></td>
+                        <td><a class="btn btn-primary"
+                               th:href="@{${employee.id} + '/publications/monographs/' + ${monograph.id} + '/edit'}"
+                               role="button">Edit</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="false" aria-controls="collapseTwo">
+                    articles
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+                moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+                proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+                aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="false" aria-controls="collapseThree">
+                    Разворачиваемая панель #3
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+                moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+                proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+                aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table text-center border">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>full name</th>
+        <th>date of birth</th>
+        <th>department</th>
+        <th>position</th>
+        <th>degree</th>
+        <th>academic rank</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee : ${employees}">
+        <td><span th:text="${employee.id}"></span></td>
+        <td><a th:href="@{'/employees/' + ${employee.id}}"><span
+                th:text="${employee.surname + ' '+ employee.name + ' ' + employee.surname}"></span></a></td>
+        <td><span th:text="${employee.dateOfBirth}"></span></td>
+        <td><span th:text="${employee.department}"></span></td>
+        <td><span th:text="${employee.position}"></span></td>
+        <td><span th:text="${employee.degree}"></span></td>
+        <td><span th:text="${employee.academicRank}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

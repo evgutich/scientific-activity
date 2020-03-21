@@ -24,11 +24,11 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Long id) {
-        Optional<Employee> employeeById = employeeService.getEmployeeById(id);
-        return employeeById.map(employee -> new ResponseEntity<>(employee, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Long id) {
+//        Optional<Employee> employeeById = employeeService.getEmployeeById(id);
+//        return employeeById.map(employee -> new ResponseEntity<>(employee, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
 
     @DeleteMapping("/api/employees/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

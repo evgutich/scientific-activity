@@ -6,8 +6,7 @@
 
     <title>Spring Boot Thymeleaf Hello World Example</title>
 
-    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/static/css/main.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
 </head>
 
@@ -23,9 +22,7 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>name</th>
-            <th>patronymic</th>
-            <th>surname</th>
+            <th>full name</th>
             <th>date of birth</th>
             <th>department</th>
             <th>position</th>
@@ -36,9 +33,7 @@
         <tbody>
         <tr th:each="employee : ${employees}">
             <td><span th:text="${employee.id}"></span></td>
-            <td><span th:text="${employee.name}"></span></td>
-            <td><span th:text="${employee.patronymic}"></span></td>
-            <td><span th:text="${employee.surname}"></span></td>
+            <td><a th:href="@{'/employees/' + ${employee.id}}"><span th:text="${employee.surname + ' '+ employee.name + ' ' + employee.surname}"></span></a></td>
             <td><span th:text="${employee.dateOfBirth}"></span></td>
             <td><span th:text="${employee.department}"></span></td>
             <td><span th:text="${employee.position}"></span></td>
@@ -49,7 +44,6 @@
     </table>
 
 </main>
-<!-- /.container -->
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </body>

@@ -1,14 +1,13 @@
 package by.it.academy.scientificactivity.service.impl;
 
+import by.it.academy.scientificactivity.exception.EmployeeNotFoundException;
 import by.it.academy.scientificactivity.model.Employee;
 import by.it.academy.scientificactivity.repository.EmployeeRepository;
 import by.it.academy.scientificactivity.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,8 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Employee> getEmployeeById(Long id) {
-        return employeeRepository.findById(id);
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
