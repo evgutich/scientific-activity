@@ -44,15 +44,15 @@ public class EmployeesController {
         return "add-employee";
     }
 
-//    @RequestMapping(value = "save", method = RequestMethod.POST)
-//    public String save(@RequestParam Long departmentID, Employee employee) {
-//        employeeService.createEmployee(employee, departmentID);
-//        return "redirect:/employees";
-//    }
-
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(@ModelAttribute Department department, Employee employee) {
         employeeService.createEmployee(employee, department.getDepartmentId());
+        return "redirect:/employees";
+    }
+
+    @RequestMapping(value = "/{employeeId}/delete", method = RequestMethod.GET)
+    public String editRemoveEmployee(@PathVariable Long employeeId, Model model) {
+        employeeService.deleteEmployee(employeeId);
         return "redirect:/employees";
     }
 

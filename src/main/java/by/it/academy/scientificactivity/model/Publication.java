@@ -20,7 +20,7 @@ public abstract class Publication {
     private String title;
     private String publisher;
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "employee_publications",
             joinColumns = {@JoinColumn(name = "publications_id")},
             inverseJoinColumns = {@JoinColumn(name = "authors_id")})

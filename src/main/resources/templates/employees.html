@@ -37,11 +37,13 @@
             <td><a th:href="@{'/employees/' + ${employee.id}}"><span
                     th:text="${employee.surname + ' '+ employee.name + ' ' + employee.patronymic}"></span></a></td>
             <td><span th:text="${employee.dateOfBirth}"></span></td>
-<!--            <td><span th:text="${employee.department}"></span></td>-->
-            <td><span th:text="${employee.department.departmentName}"></span></td>
+            <td><span th:text="${employee?.department?.departmentName}"></span></td>
             <td><span th:text="${employee.position}"></span></td>
             <td><span th:text="${employee.degree}"></span></td>
             <td><span th:text="${employee.academicRank}"></span></td>
+            <td>
+                <a th:href="@{'/employees/' + ${employee.id} + '/delete'}" class="btn btn-danger btn-xs">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
