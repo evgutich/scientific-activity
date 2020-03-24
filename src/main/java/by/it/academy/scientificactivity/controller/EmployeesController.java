@@ -30,17 +30,17 @@ public class EmployeesController {
     }
 
     @GetMapping
-    public String employeeList(Model model) {
+    public String employeeList(@ModelAttribute Department department, Model model) {
         List<Employee> allEmployees = employeeService.getAllEmployees();
         model.addAttribute("employees", allEmployees);
-        model.addAttribute("departments", departmentService.getAllDepartments());
+        model.addAttribute("department", department.getDepartmentName());
         return "employees";
     }
 
     @RequestMapping(value = "add")
     public String addEmployee(Model model) {
         model.addAttribute("employee", new Employee());
-        model.addAttribute("departments", departmentService.getAllDepartments());
+//        model.addAttribute("departments", departmentService.getAllDepartments());
         return "add-employee";
     }
 

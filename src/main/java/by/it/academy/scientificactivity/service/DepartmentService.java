@@ -15,4 +15,5 @@ public interface DepartmentService {
     Department createDepartment(Department department);
 
     Department updateDepartment(Department department);
+
 }
