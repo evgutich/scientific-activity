@@ -26,7 +26,7 @@ public class Employee {
     private String surname;
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Department department;
     private String position;
     @Enumerated(EnumType.STRING)
@@ -34,8 +34,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private AcademicRank academicRank;
     @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "authors")
-
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "authors")
     private List<Publication> publications = new ArrayList<>();
 
 }

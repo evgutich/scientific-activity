@@ -1,9 +1,12 @@
 package by.it.academy.scientificactivity.service.impl;
 
+import by.it.academy.scientificactivity.exception.DepartmentNotFoundException;
 import by.it.academy.scientificactivity.exception.EmployeeNotFoundException;
 import by.it.academy.scientificactivity.model.Employee;
+import by.it.academy.scientificactivity.repository.DepartmentRepository;
 import by.it.academy.scientificactivity.repository.EmployeeRepository;
 import by.it.academy.scientificactivity.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +18,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    private final DepartmentRepository departmentRepository;
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository) {
         this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     @Override
@@ -37,7 +43,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee createEmployee(Employee employee) {
+    public Employee createEmployee(Employee employee, Long departmentId) {
+        employee.setDepartment(departmentRepository.findById(departmentId).orElseThrow(DepartmentNotFoundException::new));
         return employeeRepository.save(employee);
     }
 

@@ -42,6 +42,14 @@ public class PublicationsController {
         return "edit-monograph";
     }
 
+    @DeleteMapping("/monographs/{monographId}/delete")
+    public String viewMonographDeleteForm(@PathVariable Long employeeId, @PathVariable Long monographId) {
+        Employee employeeById = employeeService.getEmployeeById(employeeId);
+        publicationService.deletePublication(monographId);
+        return "redirect:/employees/" + employeeById.getId();
+//        return "edit-monograph";
+    }
+
     @PostMapping(value = "/monographs/{monographId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String createPublication(@PathVariable Long employeeId,
                                     @PathVariable Long monographId,

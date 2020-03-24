@@ -6,7 +6,8 @@
 
     <title>Spring Boot Thymeleaf Hello World Example</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
 </head>
 
@@ -17,8 +18,8 @@
 </nav>
 
 <main role="main" class="container">
-
-    <table class="table text-center border">
+<div style="padding:0 20px">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>#</th>
@@ -33,7 +34,8 @@
         <tbody>
         <tr th:each="employee : ${employees}">
             <td><span th:text="${employee.id}"></span></td>
-            <td><a th:href="@{'/employees/' + ${employee.id}}"><span th:text="${employee.surname + ' '+ employee.name + ' ' + employee.surname}"></span></a></td>
+            <td><a th:href="@{'/employees/' + ${employee.id}}"><span
+                    th:text="${employee.surname + ' '+ employee.name + ' ' + employee.patronymic}"></span></a></td>
             <td><span th:text="${employee.dateOfBirth}"></span></td>
             <td><span th:text="${employee.department}"></span></td>
             <td><span th:text="${employee.position}"></span></td>
@@ -42,6 +44,8 @@
         </tr>
         </tbody>
     </table>
+    <a href="employees/add" class="btn btn-success">Add employee</a>
+</div>
 
 </main>
 

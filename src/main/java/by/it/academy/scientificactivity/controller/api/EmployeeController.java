@@ -36,11 +36,11 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createEmployee(@RequestBody Employee employee){
-        employeeService.createEmployee(employee);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void createEmployee(@RequestBody Employee employee){
+//        employeeService.createEmployee(employee);
+//    }
 
     @PutMapping
     public Employee updateEmployee(@RequestBody Employee employee){

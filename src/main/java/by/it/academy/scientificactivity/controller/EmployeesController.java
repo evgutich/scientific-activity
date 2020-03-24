@@ -1,14 +1,14 @@
 package by.it.academy.scientificactivity.controller;
 
+import by.it.academy.scientificactivity.model.Department;
 import by.it.academy.scientificactivity.model.Employee;
+import by.it.academy.scientificactivity.service.DepartmentService;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import by.it.academy.scientificactivity.service.PublicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,16 +21,39 @@ public class EmployeesController {
 
     private final PublicationService publicationService;
 
-    public EmployeesController(EmployeeService employeeService, PublicationService publicationService) {
+    private final DepartmentService departmentService;
+
+    public EmployeesController(EmployeeService employeeService, PublicationService publicationService, DepartmentService departmentService) {
         this.employeeService = employeeService;
         this.publicationService = publicationService;
+        this.departmentService = departmentService;
     }
 
     @GetMapping
     public String employeeList(Model model) {
         List<Employee> allEmployees = employeeService.getAllEmployees();
         model.addAttribute("employees", allEmployees);
+        model.addAttribute("departments", departmentService.getAllDepartments());
         return "employees";
+    }
+
+    @RequestMapping(value = "add")
+    public String addEmployee(Model model) {
+        model.addAttribute("employee", new Employee());
+        model.addAttribute("departments", departmentService.getAllDepartments());
+        return "add-employee";
+    }
+
+//    @RequestMapping(value = "save", method = RequestMethod.POST)
+//    public String save(@RequestParam Long departmentID, Employee employee) {
+//        employeeService.createEmployee(employee, departmentID);
+//        return "redirect:/employees";
+//    }
+
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public String save(@ModelAttribute Department department, Employee employee) {
+        employeeService.createEmployee(employee, department.getDepartmentId());
+        return "redirect:/employees";
     }
 
     @GetMapping("/{employeeId}")
