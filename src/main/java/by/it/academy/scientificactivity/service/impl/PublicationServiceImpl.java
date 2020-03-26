@@ -42,6 +42,10 @@ public class PublicationServiceImpl implements PublicationService {
 
     @Override
     public void deletePublication(Long id) {
+        Publication publication = publicationRepository.findById(id).orElseThrow(PublicationNotFoundException::new);
+        for (Employee author : publication.getAuthors()) {
+            author.removePublication(publication);
+        }
         publicationRepository.deleteById(id);
     }
 

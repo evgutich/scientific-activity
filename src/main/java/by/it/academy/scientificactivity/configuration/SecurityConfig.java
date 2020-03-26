@@ -17,7 +17,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user").password("{noop}pass").roles("USER")
                 .and()
                 .withUser("admin").password("{noop}pass").roles("USER", "ADMIN");
-
     }
 
     @Override
@@ -34,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/employees/**").hasRole("ADMIN")
                 .antMatchers("/api/**").hasAnyRole("ADMIN", "USER")
+                .and()
+                .logout()
                 .and()
                 .csrf().disable()
                 .formLogin().disable();

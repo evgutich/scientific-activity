@@ -37,20 +37,20 @@ public class EmployeesController {
         return "employees";
     }
 
-    @RequestMapping(value = "add")
+    @RequestMapping("add")
     public String addEmployee(Model model) {
         model.addAttribute("employee", new Employee());
-//        model.addAttribute("departments", departmentService.getAllDepartments());
+        model.addAttribute("departments", departmentService.getAllDepartments());
         return "add-employee";
     }
 
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @PostMapping("save")
     public String save(@ModelAttribute Department department, Employee employee) {
         employeeService.createEmployee(employee, department.getDepartmentId());
         return "redirect:/employees";
     }
 
-    @RequestMapping(value = "/{employeeId}/delete", method = RequestMethod.GET)
+    @GetMapping("/{employeeId}/delete")
     public String editRemoveEmployee(@PathVariable Long employeeId, Model model) {
         employeeService.deleteEmployee(employeeId);
         return "redirect:/employees";

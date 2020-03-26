@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add student</title>
+    <title>Add employee</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -30,6 +30,14 @@
                         th:text="${department.departmentName}">Department</option>
             </select>
         </div>
+        <div class="col-md-6">
+            <select class="form-control" th:field="*{academicRank}" name="academicRank">
+                <option th:each="academicRank : ${T(by.it.academy.scientificactivity.model.AcademicRank).values()}"
+                        th:value="${academicRank}"
+                        th:text="${academicRank}">Academic rank
+                </option>
+            </select>
+        </div>
         <div style="clear: both; display: block; height: 10px;"></div>
         <input type="text" th:field="*{position}" class="form-control"
                placeholder="Position"/>
@@ -40,7 +48,7 @@
         <input type="text" th:field="*{academicRank}" class="form-control"
                placeholder="Academic rank"/>
         <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="submit" class="btn btn-success" value="Save"></input>
+        <input type="submit" class="btn btn-success" value="Save"/>
     </form>
 </div>
 

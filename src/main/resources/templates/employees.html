@@ -14,41 +14,47 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Example.com</a>
+    <a class="navbar-brand" href="http://rspch.by/ru">rspch.by</a>
 </nav>
 
-<main role="main" class="container">
-<div style="padding:0 20px">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>full name</th>
-            <th>date of birth</th>
-            <th>department</th>
-            <th>position</th>
-            <th>degree</th>
-            <th>academic rank</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="employee : ${employees}">
-            <td><span th:text="${employee.id}"></span></td>
-            <td><a th:href="@{'/employees/' + ${employee.id}}"><span
-                    th:text="${employee.surname + ' '+ employee.name + ' ' + employee.patronymic}"></span></a></td>
-            <td><span th:text="${employee.dateOfBirth}"></span></td>
-            <td><span th:text="${employee?.department?.departmentName}"></span></td>
-            <td><span th:text="${employee.position}"></span></td>
-            <td><span th:text="${employee.degree}"></span></td>
-            <td><span th:text="${employee.academicRank}"></span></td>
-            <td>
-                <a th:href="@{'/employees/' + ${employee.id} + '/delete'}" class="btn btn-danger btn-xs">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a href="employees/add" class="btn btn-success">Add employee</a>
+<div class="col-md-4" style="padding:20px 0">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out" class="btn btn-danger"/>
+    </form>
 </div>
+
+<main role="main" class="container">
+    <div style="padding:0 20px">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>full name</th>
+                <th>date of birth</th>
+                <th>department</th>
+                <th>position</th>
+                <th>degree</th>
+                <th>academic rank</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${employees}">
+                <td><span th:text="${employee.id}"></span></td>
+                <td><a th:href="@{'/employees/' + ${employee.id}}"><span
+                        th:text="${employee.surname + ' '+ employee.name + ' ' + employee.patronymic}"></span></a></td>
+                <td><span th:text="${employee.dateOfBirth}"></span></td>
+                <td><span th:text="${employee?.department?.departmentName}"></span></td>
+                <td><span th:text="${employee.position}"></span></td>
+                <td><span th:text="${employee.degree}"></span></td>
+                <td><span th:text="${employee.academicRank}"></span></td>
+                <td>
+                    <a th:href="@{'/employees/' + ${employee.id} + '/delete'}" class="btn btn-danger btn-xs">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{'/employees/add'}" class="btn btn-success">Add employee</a>
+    </div>
 
 </main>
 

@@ -21,10 +21,10 @@ public class PublicationController {
         this.publicationService = publicationService;
     }
 
-    @PostMapping("/monograph")
-    public void createMonograph(@RequestBody Monograph monograph) {
-        publicationService.createPublication(monograph);
-    }
+//    @PostMapping("/monograph")
+//    public void createMonograph(@RequestBody Monograph monograph) {
+//        publicationService.createPublication(monograph);
+//    }
 
     @PostMapping("/article")
     public void createArticle(@RequestBody Article article) {

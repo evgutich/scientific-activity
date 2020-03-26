@@ -26,4 +26,14 @@ public abstract class Publication {
             inverseJoinColumns = {@JoinColumn(name = "authors_id")})
     private List<Employee> authors = new ArrayList<>();
     private LocalDate entryDate;
+
+    public void addAuthor(Employee e) {
+        this.authors.add(e);
+        e.getPublications().add(this);
+    }
+
+    public void removeAuthor(Employee e) {
+        this.authors.remove(e);
+        e.getPublications().remove(e);
+    }
 }
