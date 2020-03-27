@@ -30,10 +30,9 @@ public class EmployeesController {
     }
 
     @GetMapping
-    public String employeeList(@ModelAttribute Department department, Model model) {
+    public String employeeList(Model model) {
         List<Employee> allEmployees = employeeService.getAllEmployees();
         model.addAttribute("employees", allEmployees);
-        model.addAttribute("department", department.getDepartmentName());
         return "employees";
     }
 
