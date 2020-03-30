@@ -8,6 +8,8 @@ import by.it.academy.scientificactivity.repository.DepartmentRepository;
 import by.it.academy.scientificactivity.repository.EmployeeRepository;
 import by.it.academy.scientificactivity.repository.PublicationRepository;
 import by.it.academy.scientificactivity.service.EmployeeService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +25,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final DepartmentRepository departmentRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PublicationRepository publicationRepository, DepartmentRepository departmentRepository) {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
+                               PublicationRepository publicationRepository,
+                               DepartmentRepository departmentRepository,
+                               @Lazy
+                                       BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.employeeRepository = employeeRepository;
         this.publicationRepository = publicationRepository;
         this.departmentRepository = departmentRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -42,6 +51,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee getEmployeeByUserName(String userName) {
+        return employeeRepository.findEmployeeByUserName(userName);
+    }
+
+    @Override
     public void deleteEmployee(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
         for (Publication publication : employee.getPublications()) {
@@ -54,12 +68,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee createEmployee(Employee employee, Long departmentId) {
+        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
+        employee.setActive(true);
         employee.setDepartment(departmentRepository.findById(departmentId).orElseThrow(DepartmentNotFoundException::new));
         return employeeRepository.save(employee);
     }
 
     @Override
     public Employee updateEmployee(Employee employee) {
+        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         return employeeRepository.save(employee);
     }
 }

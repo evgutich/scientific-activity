@@ -6,6 +6,7 @@ import by.it.academy.scientificactivity.service.DepartmentService;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import by.it.academy.scientificactivity.service.PublicationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,13 @@ public class EmployeesController {
 
     private final DepartmentService departmentService;
 
-    public EmployeesController(EmployeeService employeeService, PublicationService publicationService, DepartmentService departmentService) {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public EmployeesController(EmployeeService employeeService, PublicationService publicationService, DepartmentService departmentService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.employeeService = employeeService;
         this.publicationService = publicationService;
         this.departmentService = departmentService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping
