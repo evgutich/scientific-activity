@@ -17,12 +17,16 @@ public interface PublicationService {
 
     Publication updatePublication(Publication publication);
 
-    List<Publication> getMonographs();
+    List<Monograph> getMonographs();
 
     List<Publication> getMonographsByAuthorId(Long id);
 
     List<Publication> getArticles();
 
     void updateMonographForEmployee(Long employeeId, Long monographId, Monograph monograph);
+
+    List<Publication> getAllByOrderByEntryDateAsc();
+
+    List<Publication> getAllByOrderByEntryDateDesc();
 
 }

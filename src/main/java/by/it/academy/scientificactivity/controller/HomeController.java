@@ -2,7 +2,6 @@ package by.it.academy.scientificactivity.controller;
 
 import by.it.academy.scientificactivity.model.Employee;
 import by.it.academy.scientificactivity.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +25,6 @@ public class HomeController {
     public String homePage(Model model) {
         List<Employee> allEmployees = employeeService.getAllEmployees();
         model.addAttribute("employees", allEmployees);
-        return "employees";
+        return "home";
     }
 }

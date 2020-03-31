@@ -35,17 +35,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/employees").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/employees").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/employees/**/delete").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/employees/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/employees/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/employees/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/employees/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin();
+                .anyRequest().permitAll();
+//                .antMatchers(HttpMethod.GET, "/employees").hasRole("USER")
+//                .antMatchers(HttpMethod.GET, "/employees").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/employees/**/delete").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/employees/**").hasRole("USER")
+//                .antMatchers(HttpMethod.GET, "/employees/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.POST, "/employees/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.DELETE, "/employees/**").hasRole("ADMIN")
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin();
     }
 }

@@ -2,6 +2,7 @@ package by.it.academy.scientificactivity.controller;
 
 import by.it.academy.scientificactivity.model.Department;
 import by.it.academy.scientificactivity.model.Employee;
+import by.it.academy.scientificactivity.model.Publication;
 import by.it.academy.scientificactivity.service.DepartmentService;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import by.it.academy.scientificactivity.service.PublicationService;
@@ -17,6 +18,8 @@ import java.util.List;
 @RequestMapping(value = "/employees")
 @Slf4j
 public class EmployeesController {
+
+    private String sortDateMethod = "ASC";
 
     private final EmployeeService employeeService;
 
@@ -64,7 +67,22 @@ public class EmployeesController {
         model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
         model.addAttribute("monographs", publicationService.getMonographsByAuthorId(employeeId));
         model.addAttribute("articles", publicationService.getArticles());
+        model.addAttribute("sort", sortDateMethod);
         log.info("our employee: " + employeeService.getEmployeeById(employeeId));
+        return "employee";
+    }
+
+    @GetMapping("/{employeeId}/sort/{sortDate}")
+    public String showEmployeeProfileSorted(@PathVariable Long employeeId, Model model) {
+        List<Publication> monographs = filterAndSort();
+        model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+//        model.addAttribute("monographs", publicationService.getMonographsByAuthorId(employeeId));
+        model.addAttribute("monographs", monographs);
+        model.addAttribute("articles", publicationService.getArticles());
+        model.addAttribute("sort", sortDateMethod);
+        log.info("our employee: " + employeeService.getEmployeeById(employeeId));
+
+//        return "redirect:/employees/" + employeeId;
         return "employee";
     }
 
@@ -74,4 +92,16 @@ public class EmployeesController {
         return "edit-monograph";
     }
 
+    private List<Publication> filterAndSort() {
+        List<Publication> publications = null;
+        switch (sortDateMethod) {
+            case "ASC":
+                publications = publicationService.getAllByOrderByEntryDateAsc();
+                break;
+            case "DESC":
+                publications = publicationService.getAllByOrderByEntryDateDesc();
+                break;
+        }
+        return publications;
+    }
 }

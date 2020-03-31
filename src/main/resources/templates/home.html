@@ -1,7 +1,14 @@
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-<head><title>Home Page</title></head>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
 <body>
-<h1>Hello !</h1>
-<p>Welcome to <span th:text="${appName}"> Our App</span></p>
+<div class="container">
+    <div th:replace="fragments/header :: header"></div>
+<!--    <div th:if="${not #lists.isEmpty(notes)}">-->
+<!--        <div th:replace="operations/list :: notebook"></div>-->
+<!--    </div>-->
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
 </body>
 </html>

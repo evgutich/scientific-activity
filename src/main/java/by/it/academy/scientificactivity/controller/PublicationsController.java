@@ -40,7 +40,6 @@ public class PublicationsController {
         model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
         model.addAttribute("monograph", new Monograph());
         model.addAttribute("employees", employeeService.getAllEmployees());
-        log.info(LocalDate.now() + "NOW!!!!!!!!!");
         return "add-monograph";
     }
 

@@ -6,6 +6,7 @@ import by.it.academy.scientificactivity.model.Employee;
 import by.it.academy.scientificactivity.model.Monograph;
 import by.it.academy.scientificactivity.model.Publication;
 import by.it.academy.scientificactivity.repository.EmployeeRepository;
+import by.it.academy.scientificactivity.repository.MonographRepository;
 import by.it.academy.scientificactivity.repository.PublicationRepository;
 import by.it.academy.scientificactivity.service.PublicationService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +24,14 @@ public class PublicationServiceImpl implements PublicationService {
 
     final PublicationRepository publicationRepository;
 
+    final MonographRepository monographRepository;
+
     final EmployeeRepository employeeRepository;
 
-    public PublicationServiceImpl(PublicationRepository publicationRepository, EmployeeRepository employeeRepository) {
+    public PublicationServiceImpl(PublicationRepository publicationRepository, EmployeeRepository employeeRepository, MonographRepository monographRepository) {
         this.publicationRepository = publicationRepository;
         this.employeeRepository = employeeRepository;
+        this.monographRepository = monographRepository;
     }
 
     @Override
@@ -60,13 +64,15 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public List<Publication> getMonographs() {
-        return publicationRepository.findMonographs();
+    public List<Monograph> getMonographs() {
+//        return publicationRepository.findMonographs();
+        return monographRepository.findAll();
     }
 
     @Override
     public List<Publication> getMonographsByAuthorId(Long id) {
         return publicationRepository.findMonographByAuthorId(id);
+//        return monographRepository.findMonographsByAuthorId(id);
     }
 
     @Override
@@ -76,12 +82,26 @@ public class PublicationServiceImpl implements PublicationService {
 
     @Override
     public void updateMonographForEmployee(Long employeeId, Long monographId, Monograph monograph) {
-        Publication newMonograph = publicationRepository.findById(monographId).orElseThrow(PublicationNotFoundException::new);
+        Monograph newMonograph = monographRepository.findById(monographId).orElseThrow(PublicationNotFoundException::new);
         List<Employee> authorsList = monograph.getAuthors().stream()
                 .map((auth) -> employeeRepository.findById(auth.getId()).orElseThrow(EmployeeNotFoundException::new))
                 .collect(toList());
         newMonograph.setTitle(monograph.getTitle());
+        newMonograph.setPublisher(monograph.getPublisher());
+        newMonograph.setMonographType(monograph.getMonographType());
+        newMonograph.setPrintRun(monograph.getPrintRun());
+        newMonograph.setNumberOfPages(monograph.getNumberOfPages());
         newMonograph.setAuthors(authorsList);
         publicationRepository.save(newMonograph);
+    }
+
+    @Override
+    public List<Publication> getAllByOrderByEntryDateAsc() {
+        return publicationRepository.findAllByOrderByEntryDateAsc();
+    }
+
+    @Override
+    public List<Publication> getAllByOrderByEntryDateDesc() {
+        return publicationRepository.findAllByOrderByEntryDateDesc();
     }
 }
