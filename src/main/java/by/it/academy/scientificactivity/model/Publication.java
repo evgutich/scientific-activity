@@ -3,9 +3,11 @@ package by.it.academy.scientificactivity.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,8 @@ public abstract class Publication {
             joinColumns = {@JoinColumn(name = "publications_id")},
             inverseJoinColumns = {@JoinColumn(name = "authors_id")})
     private List<Employee> authors = new ArrayList<>();
-    private LocalDate entryDate;
+    @CreationTimestamp
+    private LocalDateTime entryDate;
 
     public void addAuthor(Employee e) {
         this.authors.add(e);

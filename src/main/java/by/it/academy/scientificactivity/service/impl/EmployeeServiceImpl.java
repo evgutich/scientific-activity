@@ -3,17 +3,23 @@ package by.it.academy.scientificactivity.service.impl;
 import by.it.academy.scientificactivity.exception.DepartmentNotFoundException;
 import by.it.academy.scientificactivity.exception.EmployeeNotFoundException;
 import by.it.academy.scientificactivity.model.Employee;
+import by.it.academy.scientificactivity.model.EmployeeRole;
 import by.it.academy.scientificactivity.model.Publication;
 import by.it.academy.scientificactivity.repository.DepartmentRepository;
 import by.it.academy.scientificactivity.repository.EmployeeRepository;
 import by.it.academy.scientificactivity.repository.PublicationRepository;
+import by.it.academy.scientificactivity.repository.RoleRepository;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+
+import static by.it.academy.scientificactivity.model.Role.ROLE_USER;
 
 @Service
 @Transactional
@@ -27,15 +33,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final RoleRepository roleRepository;
+
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
                                PublicationRepository publicationRepository,
                                DepartmentRepository departmentRepository,
                                @Lazy
-                                       BCryptPasswordEncoder bCryptPasswordEncoder) {
+                                       BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository) {
         this.employeeRepository = employeeRepository;
         this.publicationRepository = publicationRepository;
         this.departmentRepository = departmentRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -70,6 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee createEmployee(Employee employee, Long departmentId) {
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         employee.setActive(true);
+        employee.setRoles(new HashSet<EmployeeRole>(Arrays.asList(roleRepository.findEmployeeRoleByRole(ROLE_USER))));
         employee.setDepartment(departmentRepository.findById(departmentId).orElseThrow(DepartmentNotFoundException::new));
         return employeeRepository.save(employee);
     }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -39,6 +40,7 @@ public class PublicationsController {
         model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
         model.addAttribute("monograph", new Monograph());
         model.addAttribute("employees", employeeService.getAllEmployees());
+        log.info(LocalDate.now() + "NOW!!!!!!!!!");
         return "add-monograph";
     }
 

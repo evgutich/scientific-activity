@@ -21,25 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService
-//            , BCryptPasswordEncoder bCryptPasswordEncoder
-            ) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
-//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
-
-
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("user").password("{noop}pass").roles("USER")
-//                .and()
-//                .withUser("admin").password("{noop}pass").roles("USER", "ADMIN");
-//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,37 +31,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/employees").hasRole("USER")
-//                .antMatchers(HttpMethod.GET, "/employees/**/delete").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/employees/**").hasRole("USER")
-//                .antMatchers(HttpMethod.POST, "/employees/**").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.DELETE, "/employees/**").hasRole("ADMIN")
-////                .antMatchers("/api/**").hasAnyRole("ADMIN", "USER")
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin();
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/employees").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/employees").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/employees/**/delete").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/employees/**").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/employees/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/employees/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/employees/**").hasRole("ADMIN")
-//                .antMatchers("/api/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();
