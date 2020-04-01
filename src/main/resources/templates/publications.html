@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Publications</title>
+
+    <head th:replace="fragments/head :: head"></head>
+
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<main role="main" class="container-fluid">
+    <div style="clear: both; display: block; height: 10px;"></div>
+    <table class="table table-hover horizontal-align table-sort">
+        <thead>
+        <tr>
+            <th style="width: 20%; text-align: center">Title</th>
+            <th style="width: 15%; text-align: center">Publisher</th>
+            <th style="width: 10%; text-align: center">Entry Date</th>
+            <th style="width: 15%; text-align: center">Authors</th>
+            <th style="width: 5%; text-align: center">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="publication : ${publications}">
+            <td style="vertical-align: middle"><span th:text="${publication.title}"></span></td>
+            <td style="text-align: center; vertical-align: middle"><span th:text="${publication.publisher}"></span></td>
+            <td style="text-align: center; vertical-align: middle"><span
+                    th:text="${#temporals.format(publication.entryDate, 'd MMM yyyy')}"
+            ></span></td>
+            <td style="text-align: center; vertical-align: middle">
+                <a th:href="@{'/employees/' + ${author.id}}" th:each="author : ${publication.authors}">
+                    <div th:text="${author.surname} + ' ' + ${author.name.charAt(0)} + '.' + ${author.patronymic.charAt(0)+ '.'}"></div>
+                </a>
+            </td>
+            <td style="text-align: center; vertical-align: middle"><a
+                    th:href="@{'/publications/' + ${publication.id} + '/delete'}"><i
+                    class="fa fa-trash" style="font-size:20px" aria-hidden="true"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="clear: both; display: block; height: 10px;"></div>
+
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script> $(document).ready(function () {
+    $(".table-sort").DataTable({
+        'columnDefs': [{
+            'targets': [4],
+            'orderable': false,
+        }]
+    });
+});</script>
+
+</body>
+</html>

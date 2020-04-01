@@ -16,5 +16,5 @@ public interface EmployeeService {
 
     Employee createEmployee(Employee employee, Long departmentId);
 
-    Employee updateEmployee(Employee employee);
+    Employee updateEmployee(Long employeeId, Employee employee, Long departmentId);
 }

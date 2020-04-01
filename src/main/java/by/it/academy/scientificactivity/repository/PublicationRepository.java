@@ -22,7 +22,4 @@ public interface PublicationRepository extends CrudRepository<Publication, Long>
     @Query("SELECT p FROM Publication p join p.authors a WHERE a.id = :id and TYPE(p) = Thesis")
     List<Publication> findThesisByAuthorId(Long id);
 
-    List<Publication> findAllByOrderByEntryDateAsc();
-
-    List<Publication> findAllByOrderByEntryDateDesc();
 }

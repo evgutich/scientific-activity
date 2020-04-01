@@ -1,9 +1,6 @@
 package by.it.academy.scientificactivity.controller;
 
-import by.it.academy.scientificactivity.model.Article;
-import by.it.academy.scientificactivity.model.Employee;
-import by.it.academy.scientificactivity.model.Monograph;
-import by.it.academy.scientificactivity.model.Publication;
+import by.it.academy.scientificactivity.model.*;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import by.it.academy.scientificactivity.service.PublicationService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("employees/{employeeId}/publications")
@@ -30,8 +25,7 @@ public class PublicationsController {
 
     @GetMapping
     public String publicationList(Model model) {
-        List<Publication> allPublications = publicationService.getAllPublications();
-        model.addAttribute("publications", allPublications);
+        model.addAttribute("publications", publicationService.getAllPublications());
         return "publications";
     }
 
@@ -73,7 +67,6 @@ public class PublicationsController {
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
         model.addAttribute("monographs", publicationService.getMonographs());
-//        model.addAttribute("articles", publicationService.getArticles());
         return "redirect:/employees/" + employeeById.getId();
     }
 
@@ -115,6 +108,88 @@ public class PublicationsController {
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
         model.addAttribute("articles", publicationService.getArticles());
+        return "redirect:/employees/" + employeeById.getId();
+    }
+
+    @GetMapping("textbooks/add")
+    public String addTextbook(@PathVariable Long employeeId, Model model) {
+        model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+        model.addAttribute("textbook", new Textbook());
+        model.addAttribute("employees", employeeService.getAllEmployees());
+        return "add-textbook";
+    }
+
+    @PostMapping("textbooks/save")
+    public String saveTextbook(@PathVariable Long employeeId, @ModelAttribute Textbook textbook) {
+        publicationService.createPublication(textbook);
+        return "redirect:/employees/" + employeeId;
+
+    }
+
+    @GetMapping("/textbooks/{textbookId}/edit")
+    public String viewTextbookEditForm(@PathVariable Long employeeId, @PathVariable Long textbookId, Model model) {
+        model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+        model.addAttribute("employees", employeeService.getAllEmployees());
+        model.addAttribute("textbook", publicationService.getPublicationById(textbookId));
+        return "edit-textbook";
+    }
+
+    @GetMapping("/textbooks/{textbookId}/delete")
+    public String deleteTextbook(@PathVariable Long employeeId, @PathVariable Long textbookId) {
+        publicationService.deletePublication(textbookId);
+        return "redirect:/employees/" + employeeId;
+    }
+
+    @PostMapping(value = "/textbooks/{textbookId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String editTextbook(@PathVariable Long employeeId,
+                                @PathVariable Long textbookId,
+                                @ModelAttribute Textbook textbook,
+                                Model model) {
+        publicationService.updateTextbookForEmployee(employeeId, textbookId, textbook);
+        Employee employeeById = employeeService.getEmployeeById(employeeId);
+        model.addAttribute("employee", employeeById);
+        model.addAttribute("textbooks", publicationService.getTextbooks());
+        return "redirect:/employees/" + employeeById.getId();
+    }
+
+    @GetMapping("theses/add")
+    public String addThesis(@PathVariable Long employeeId, Model model) {
+        model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+        model.addAttribute("thesis", new Thesis());
+        model.addAttribute("employees", employeeService.getAllEmployees());
+        return "add-thesis";
+    }
+
+    @PostMapping("theses/save")
+    public String saveThesis(@PathVariable Long employeeId, @ModelAttribute Thesis thesis) {
+        publicationService.createPublication(thesis);
+        return "redirect:/employees/" + employeeId;
+
+    }
+
+    @GetMapping("/theses/{thesisId}/edit")
+    public String viewThesisEditForm(@PathVariable Long employeeId, @PathVariable Long thesisId, Model model) {
+        model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+        model.addAttribute("employees", employeeService.getAllEmployees());
+        model.addAttribute("thesis", publicationService.getPublicationById(thesisId));
+        return "edit-thesis";
+    }
+
+    @GetMapping("/theses/{thesisId}/delete")
+    public String deleteThesis(@PathVariable Long employeeId, @PathVariable Long thesisId) {
+        publicationService.deletePublication(thesisId);
+        return "redirect:/employees/" + employeeId;
+    }
+
+    @PostMapping(value = "/theses/{thesisId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String editArticle(@PathVariable Long employeeId,
+                              @PathVariable Long thesisId,
+                              @ModelAttribute Thesis thesis,
+                              Model model) {
+        publicationService.updateThesisForEmployee(employeeId, thesisId, thesis);
+        Employee employeeById = employeeService.getEmployeeById(employeeId);
+        model.addAttribute("employee", employeeById);
+        model.addAttribute("theses", publicationService.getTheses());
         return "redirect:/employees/" + employeeById.getId();
     }
 

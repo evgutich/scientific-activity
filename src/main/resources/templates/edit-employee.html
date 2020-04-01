@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add employee</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Edit Monograph</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
 </head>
-
-
 <body>
-<h1>New employee</h1>
 <div class="row justify-content-md-center">
 
     <div class="col-md-4">
-        <form th:object="${employee}" class="needs-validation" novalidate th:action="@{save}" action="#" method="post">
+        <form action="#" th:action="@{'/employees/' + ${employee.id} + '/update'}"
+              th:object="${employee}"
+              method="post">
 
             <div>
                 <input type="text" th:field="*{userName}" class="form-control"
@@ -24,7 +26,7 @@
                 <div style="clear: both; display: block; height: 10px;"></div>
             </div>
 
-            <input type="password" th:field="*{password}" class="form-control"
+            <input type="password" th:field="*{password}" class="form-control text-muted"
                    placeholder="Password"/>
             <div style="clear: both; display: block; height: 10px;"></div>
             <input type="text" th:field="*{surname}" class="form-control"
@@ -63,8 +65,7 @@
                 </option>
             </select>
             <div style="clear: both; display: block; height: 10px;"></div>
-            <input type="submit" class="btn btn-success" value="Save"/>
-
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>

@@ -6,6 +6,7 @@ import by.it.academy.scientificactivity.service.DepartmentService;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import by.it.academy.scientificactivity.service.PublicationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +20,6 @@ import java.util.List;
 @RequestMapping(value = "/employees")
 @Slf4j
 public class EmployeesController {
-
-    private String sortDateMethod = "ASC";
 
     private final EmployeeService employeeService;
 
@@ -61,9 +60,23 @@ public class EmployeesController {
         return "redirect:/employees";
     }
 
+    @GetMapping("/{employeeId}/edit")
+    public String viewEmployeeEditForm(@PathVariable Long employeeId, Model model) {
+        model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+        model.addAttribute("departments", departmentService.getAllDepartments());
+        return "edit-employee";
+    }
+
     @GetMapping("/{employeeId}/delete")
-    public String editRemoveEmployee(@PathVariable Long employeeId, Model model) {
+    public String deleteEmployee(@PathVariable Long employeeId, Model model) {
         employeeService.deleteEmployee(employeeId);
+        return "redirect:/employees";
+    }
+
+    @PostMapping(value = "/{employeeId}/update" , consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String updateEmployee(@PathVariable Long employeeId, @ModelAttribute Employee employee, @ModelAttribute Department department) {
+//        Employee employee = employeeService.getEmployeeById(employeeId);
+        employeeService.updateEmployee(employeeId, employee, department.getDepartmentId());
         return "redirect:/employees";
     }
 
@@ -74,15 +87,14 @@ public class EmployeesController {
         model.addAttribute("articles", publicationService.getArticlesByAuthorId(employeeId));
         model.addAttribute("textbooks", publicationService.getTextbooksByAuthorId(employeeId));
         model.addAttribute("theses", publicationService.getThesesByAuthorId(employeeId));
-        model.addAttribute("sort", sortDateMethod);
         log.info("our employee: " + employeeService.getEmployeeById(employeeId));
         return "employee";
     }
 
-    @GetMapping("/{id}/publications/monographs")
-    public String monographCreationForm(@PathVariable Long id, Model model) {
-        model.addAttribute("employee", employeeService.getEmployeeById(id));
-        return "edit-monograph";
-    }
+//    @GetMapping("/{id}/publications/monographs")
+//    public String monographCreationForm(@PathVariable Long id, Model model) {
+//        model.addAttribute("employee", employeeService.getEmployeeById(id));
+//        return "edit-monograph";
+//    }
 
 }

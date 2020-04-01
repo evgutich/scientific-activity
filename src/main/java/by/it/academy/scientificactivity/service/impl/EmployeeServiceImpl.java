@@ -85,8 +85,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(Employee employee) {
-        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
-        return employeeRepository.save(employee);
+    public Employee updateEmployee(Long employeeId, Employee employee, Long departmentId) {
+        Employee newEmployee = employeeRepository.findById(employeeId).orElseThrow(EmployeeNotFoundException::new);
+        newEmployee.setUserName(employee.getUserName());
+        newEmployee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
+        newEmployee.setSurname(employee.getSurname());
+        newEmployee.setName(employee.getName());
+        newEmployee.setPatronymic(employee.getPatronymic());
+        newEmployee.setDateOfBirth(employee.getDateOfBirth());
+        newEmployee.setDepartment(departmentRepository.findById(departmentId).orElseThrow(DepartmentNotFoundException::new));
+        newEmployee.setPosition(employee.getPosition());
+        newEmployee.setDegree(employee.getDegree());
+        newEmployee.setAcademicRank(employee.getAcademicRank());
+        return employeeRepository.save(newEmployee);
     }
 }

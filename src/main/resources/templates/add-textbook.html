@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>New article</title>
+    <title>New Textbook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -10,9 +10,10 @@
 <body>
 
 <div class="container">
-    <form action="#" th:action="@{'/employees/'+${employee.id}+'/publications/articles/save'}"
-          th:object="${article}"
+    <form action="#" th:action="@{'/employees/'+${employee.id}+'/publications/textbooks/save'}"
+          th:object="${textbook}"
           method="post">
+
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" th:field="*{title}" class="form-control" aria-describedby="titleHelp"
@@ -25,30 +26,20 @@
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <select class="form-control selectpicker" th:field="*{articleType}" name="articleType">
-                <option th:each="articleType : ${T(by.it.academy.scientificactivity.model.ArticleType).values()}"
-                        th:value="${articleType}"
-                        th:text="${articleType}">Article Type
+            <select class="form-control selectpicker" th:field="*{textbookType}" name="textbookType">
+                <option th:each="textbookType : ${T(by.it.academy.scientificactivity.model.TextbookType).values()}"
+                        th:value="${textbookType}"
+                        th:text="${textbookType}">Textbook Type
                 </option>
             </select>
         </div>
         <div class="form-group">
-            <label for="type">Edition</label>
-            <select class="form-control selectpicker" th:field="*{articleEdition}" name="articleEdition">
-                <option th:each="articleEdition : ${T(by.it.academy.scientificactivity.model.ArticleEdition).values()}"
-                        th:value="${articleEdition}"
-                        th:text="${articleEdition}">Article Edition
-                </option>
-            </select>
+            <label for="printRun">Print Run</label>
+            <input type="text" th:field="*{printRun}" class="form-control" placeholder="Enter print run of publication">
         </div>
         <div class="form-group">
-            <label for="type">Language</label>
-            <select class="form-control selectpicker" th:field="*{publicationLanguage}" name="publicationLanguage">
-                <option th:each="publicationLanguage : ${T(by.it.academy.scientificactivity.model.PublicationLanguage).values()}"
-                        th:value="${publicationLanguage}"
-                        th:text="${publicationLanguage}">Article Language
-                </option>
-            </select>
+            <label for="numberOfPages">Number of Pages</label>
+            <input type="text" th:field="*{numberOfPages}" class="form-control" placeholder="Enter number of pages of publication">
         </div>
 
         <div class="form-group">

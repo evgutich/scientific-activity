@@ -42,9 +42,9 @@ public class EmployeeController {
 //        employeeService.createEmployee(employee);
 //    }
 
-    @PutMapping
-    public Employee updateEmployee(@RequestBody Employee employee){
-        return employeeService.updateEmployee(employee);
-    }
+//    @PutMapping
+//    public Employee updateEmployee(@RequestBody Employee employee){
+//        return employeeService.updateEmployee(employee);
+//    }
 
 }

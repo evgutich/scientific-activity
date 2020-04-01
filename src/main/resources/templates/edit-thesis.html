@@ -2,17 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>New article</title>
+    <title>Edit monograph</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
 </head>
 <body>
-
 <div class="container">
-    <form action="#" th:action="@{'/employees/'+${employee.id}+'/publications/articles/save'}"
-          th:object="${article}"
+    <form action="#" th:action="@{'/employees/'+${employee.id}+'/publications/thesis/'+${thesis.id}}"
+          th:object="${thesis}"
           method="post">
+
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" th:field="*{title}" class="form-control" aria-describedby="titleHelp"
@@ -25,19 +27,10 @@
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <select class="form-control selectpicker" th:field="*{articleType}" name="articleType">
-                <option th:each="articleType : ${T(by.it.academy.scientificactivity.model.ArticleType).values()}"
-                        th:value="${articleType}"
-                        th:text="${articleType}">Article Type
-                </option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="type">Edition</label>
-            <select class="form-control selectpicker" th:field="*{articleEdition}" name="articleEdition">
-                <option th:each="articleEdition : ${T(by.it.academy.scientificactivity.model.ArticleEdition).values()}"
-                        th:value="${articleEdition}"
-                        th:text="${articleEdition}">Article Edition
+            <select class="form-control selectpicker" th:field="*{thesisType}" name="thesisType">
+                <option th:each="thesisType : ${T(by.it.academy.scientificactivity.model.ThesisType).values()}"
+                        th:value="${thesisType}"
+                        th:text="${thesisType}">Thesis Type
                 </option>
             </select>
         </div>
@@ -46,7 +39,7 @@
             <select class="form-control selectpicker" th:field="*{publicationLanguage}" name="publicationLanguage">
                 <option th:each="publicationLanguage : ${T(by.it.academy.scientificactivity.model.PublicationLanguage).values()}"
                         th:value="${publicationLanguage}"
-                        th:text="${publicationLanguage}">Article Language
+                        th:text="${publicationLanguage}">Thesis Language
                 </option>
             </select>
         </div>

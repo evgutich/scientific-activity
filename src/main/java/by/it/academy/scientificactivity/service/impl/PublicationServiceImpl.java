@@ -166,5 +166,4 @@ public class PublicationServiceImpl implements PublicationService {
         newThesis.setAuthors(authorsList);
         publicationRepository.save(newThesis);
     }
-
 }
