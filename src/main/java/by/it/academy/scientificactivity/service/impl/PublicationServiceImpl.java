@@ -2,12 +2,8 @@ package by.it.academy.scientificactivity.service.impl;
 
 import by.it.academy.scientificactivity.exception.EmployeeNotFoundException;
 import by.it.academy.scientificactivity.exception.PublicationNotFoundException;
-import by.it.academy.scientificactivity.model.Employee;
-import by.it.academy.scientificactivity.model.Monograph;
-import by.it.academy.scientificactivity.model.Publication;
-import by.it.academy.scientificactivity.repository.EmployeeRepository;
-import by.it.academy.scientificactivity.repository.MonographRepository;
-import by.it.academy.scientificactivity.repository.PublicationRepository;
+import by.it.academy.scientificactivity.model.*;
+import by.it.academy.scientificactivity.repository.*;
 import by.it.academy.scientificactivity.service.PublicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,10 +24,19 @@ public class PublicationServiceImpl implements PublicationService {
 
     final EmployeeRepository employeeRepository;
 
-    public PublicationServiceImpl(PublicationRepository publicationRepository, EmployeeRepository employeeRepository, MonographRepository monographRepository) {
+    final ArticleRepository articleRepository;
+
+    final TextbookRepository textbookRepository;
+
+    final ThesisRepository thesisRepository;
+
+    public PublicationServiceImpl(PublicationRepository publicationRepository, EmployeeRepository employeeRepository, MonographRepository monographRepository, ArticleRepository articleRepository, TextbookRepository textbookRepository, ThesisRepository thesisRepository) {
         this.publicationRepository = publicationRepository;
         this.employeeRepository = employeeRepository;
         this.monographRepository = monographRepository;
+        this.articleRepository = articleRepository;
+        this.textbookRepository = textbookRepository;
+        this.thesisRepository = thesisRepository;
     }
 
     @Override
@@ -65,19 +70,42 @@ public class PublicationServiceImpl implements PublicationService {
 
     @Override
     public List<Monograph> getMonographs() {
-//        return publicationRepository.findMonographs();
         return monographRepository.findAll();
     }
 
     @Override
     public List<Publication> getMonographsByAuthorId(Long id) {
         return publicationRepository.findMonographByAuthorId(id);
-//        return monographRepository.findMonographsByAuthorId(id);
     }
 
     @Override
-    public List<Publication> getArticles() {
-        return publicationRepository.findArticles();
+    public List<Publication> getArticlesByAuthorId(Long id) {
+        return publicationRepository.findArticleByAuthorId(id);
+    }
+
+    @Override
+    public List<Publication> getTextbooksByAuthorId(Long id) {
+        return publicationRepository.findTextbookByAuthorId(id);
+    }
+
+    @Override
+    public List<Publication> getThesesByAuthorId(Long id) {
+        return publicationRepository.findThesisByAuthorId(id);
+    }
+
+    @Override
+    public List<Article> getArticles() {
+        return articleRepository.findAll();
+    }
+
+    @Override
+    public List<Textbook> getTextbooks() {
+        return textbookRepository.findAll();
+    }
+
+    @Override
+    public List<Thesis> getTheses() {
+        return thesisRepository.findAll();
     }
 
     @Override
@@ -96,12 +124,47 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public List<Publication> getAllByOrderByEntryDateAsc() {
-        return publicationRepository.findAllByOrderByEntryDateAsc();
+    public void updateArticleForEmployee(Long employeeId, Long articleId, Article article) {
+        Article newArticle = articleRepository.findById(articleId).orElseThrow(PublicationNotFoundException::new);
+        List<Employee> authorsList = article.getAuthors().stream()
+                .map((auth) -> employeeRepository.findById(auth.getId()).orElseThrow(EmployeeNotFoundException::new))
+                .collect(toList());
+        newArticle.setTitle(article.getTitle());
+        newArticle.setPublisher(article.getPublisher());
+        newArticle.setArticleType(article.getArticleType());
+        newArticle.setArticleEdition(article.getArticleEdition());
+        newArticle.setPublicationLanguage(article.getPublicationLanguage());
+        newArticle.setAuthors(authorsList);
+        publicationRepository.save(newArticle);
     }
 
     @Override
-    public List<Publication> getAllByOrderByEntryDateDesc() {
-        return publicationRepository.findAllByOrderByEntryDateDesc();
+    public void updateTextbookForEmployee(Long employeeId, Long textbookID, Textbook textbook) {
+        Textbook newTextbook = textbookRepository.findById(textbookID).orElseThrow(PublicationNotFoundException::new);
+        List<Employee> authorsList = textbook.getAuthors().stream()
+                .map((auth) -> employeeRepository.findById(auth.getId()).orElseThrow(EmployeeNotFoundException::new))
+                .collect(toList());
+        newTextbook.setTitle(textbook.getTitle());
+        newTextbook.setPublisher(textbook.getPublisher());
+        newTextbook.setTextbookType(textbook.getTextbookType());
+        newTextbook.setPrintRun(textbook.getPrintRun());
+        newTextbook.setNumberOfPages(textbook.getNumberOfPages());
+        newTextbook.setAuthors(authorsList);
+        publicationRepository.save(newTextbook);
     }
+
+    @Override
+    public void updateThesisForEmployee(Long employeeId, Long thesisId, Thesis thesis) {
+        Thesis newThesis = thesisRepository.findById(thesisId).orElseThrow(PublicationNotFoundException::new);
+        List<Employee> authorsList = thesis.getAuthors().stream()
+                .map((auth) -> employeeRepository.findById(auth.getId()).orElseThrow(EmployeeNotFoundException::new))
+                .collect(toList());
+        newThesis.setTitle(thesis.getTitle());
+        newThesis.setPublisher(thesis.getPublisher());
+        newThesis.setThesisType(thesis.getThesisType());
+        newThesis.setPublicationLanguage(thesis.getPublicationLanguage());
+        newThesis.setAuthors(authorsList);
+        publicationRepository.save(newThesis);
+    }
+
 }

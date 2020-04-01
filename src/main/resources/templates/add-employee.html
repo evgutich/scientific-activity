@@ -3,60 +3,70 @@
 <head>
     <title>Add employee</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 </head>
+
 
 <body>
 <h1>New employee</h1>
-<div class="col-md-4">
-    <form th:object="${employee}" th:action="@{save}" action="#" method="post">
-        <input type="text" th:field="*{userName}" class="form-control"
-               placeholder="Username"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="text" th:field="*{password}" class="form-control"
-               placeholder="Password"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="text" th:field="*{surname}" class="form-control"
-               placeholder="Surname"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="text" th:field="*{name}" class="form-control"
-               placeholder="Name"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="text" th:field="*{patronymic}" class="form-control"
-               placeholder="Patronymic"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="text" th:field="*{dateOfBirth}" class="form-control"
-               placeholder="Date of birth"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <div class="col-md-6">
+<div class="row justify-content-md-center">
+
+    <div class="col-md-4">
+        <form th:object="${employee}" class="needs-validation" novalidate th:action="@{save}" action="#" method="post">
+
+            <div>
+                <input type="text" th:field="*{userName}" class="form-control"
+                       placeholder="Username"/>
+                <label th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+                       class="validation-message" style="font-size: 10pt; color: #FF1C19"></label>
+                <div style="clear: both; display: block; height: 10px;"></div>
+            </div>
+
+            <input type="text" th:field="*{password}" class="form-control"
+                   placeholder="Password"/>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <input type="text" th:field="*{surname}" class="form-control"
+                   placeholder="Surname"/>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <input type="text" th:field="*{name}" class="form-control"
+                   placeholder="Name"/>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <input type="text" th:field="*{patronymic}" class="form-control"
+                   placeholder="Patronymic"/>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <input type="text" th:field="*{dateOfBirth}" class="form-control"
+                   placeholder="Date of birth"/>
+            <div style="clear: both; display: block; height: 10px;"></div>
             <select class="form-control" name="departmentId">
                 <option th:each="department : ${departments}"
                         th:value="${department.departmentId}"
                         th:text="${department.departmentName}">Department
                 </option>
             </select>
-        </div>
-        <div class="col-md-6">
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <input type="text" th:field="*{position}" class="form-control"
+                   placeholder="Position"/>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <select class="form-control" th:field="*{degree}" name="degree">
+                <option th:each="degree : ${T(by.it.academy.scientificactivity.model.Degree).values()}"
+                        th:value="${degree}"
+                        th:text="#{${degree.propName}}">Degree
+                </option>
+            </select>
+            <div style="clear: both; display: block; height: 10px;"></div>
             <select class="form-control" th:field="*{academicRank}" name="academicRank">
                 <option th:each="academicRank : ${T(by.it.academy.scientificactivity.model.AcademicRank).values()}"
                         th:value="${academicRank}"
-                        th:text="${academicRank}">Academic rank
+                        th:text="#{${academicRank.propName}}">Academic rank
                 </option>
             </select>
-        </div>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="text" th:field="*{position}" class="form-control"
-               placeholder="Position"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="text" th:field="*{degree}" class="form-control"
-               placeholder="Degree"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="text" th:field="*{academicRank}" class="form-control"
-               placeholder="Academic rank"/>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="submit" class="btn btn-success" value="Save"/>
-    </form>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <input type="submit" class="btn btn-success" value="Save"/>
+
+        </form>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

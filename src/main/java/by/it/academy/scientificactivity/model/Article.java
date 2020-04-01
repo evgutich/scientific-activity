@@ -21,5 +21,4 @@ public class Article extends Publication {
     private ArticleEdition articleEdition;
     @Enumerated(EnumType.STRING)
     private PublicationLanguage publicationLanguage;
-    private String edition;
 }

@@ -1,7 +1,6 @@
 package by.it.academy.scientificactivity.service;
 
-import by.it.academy.scientificactivity.model.Monograph;
-import by.it.academy.scientificactivity.model.Publication;
+import by.it.academy.scientificactivity.model.*;
 
 import java.util.List;
 
@@ -19,14 +18,26 @@ public interface PublicationService {
 
     List<Monograph> getMonographs();
 
+    List<Article> getArticles();
+
+    List<Textbook> getTextbooks();
+
+    List<Thesis> getTheses();
+
     List<Publication> getMonographsByAuthorId(Long id);
 
-    List<Publication> getArticles();
+    List<Publication> getArticlesByAuthorId(Long id);
+
+    List<Publication> getTextbooksByAuthorId(Long id);
+
+    List<Publication> getThesesByAuthorId(Long id);
 
     void updateMonographForEmployee(Long employeeId, Long monographId, Monograph monograph);
 
-    List<Publication> getAllByOrderByEntryDateAsc();
+    void updateArticleForEmployee(Long employeeId, Long articleId, Article article);
 
-    List<Publication> getAllByOrderByEntryDateDesc();
+    void updateTextbookForEmployee(Long employeeId, Long textbookId, Textbook textbook);
+
+    void updateThesisForEmployee(Long employeeId, Long thesisId, Thesis thesis);
 
 }

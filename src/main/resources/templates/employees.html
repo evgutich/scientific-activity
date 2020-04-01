@@ -45,8 +45,8 @@
                 <td><span th:text="${employee.dateOfBirth}"></span></td>
                 <td><span th:text="${employee?.department?.departmentName}"></span></td>
                 <td><span th:text="${employee.position}"></span></td>
-                <td><span th:text="${employee.degree}"></span></td>
-                <td><span th:text="${employee.academicRank}"></span></td>
+                <td><span th:text="#{${employee.degree.propName}}"></span></td>
+                <td><span th:text="#{${employee.academicRank.propName}}"></span></td>
                 <td>
                     <a th:href="@{'/employees/' + ${employee.id} + '/delete'}" class="btn btn-danger btn-xs">Delete</a>
                 </td>

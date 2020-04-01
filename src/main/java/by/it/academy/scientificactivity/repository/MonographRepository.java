@@ -8,5 +8,4 @@ import java.util.List;
 public interface MonographRepository extends CrudRepository<Monograph, Long> {
 
     List<Monograph> findAll();
-//    List<Monograph> findMonographsByAuthorId(Long id);
 }

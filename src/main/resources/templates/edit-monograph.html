@@ -14,20 +14,6 @@
     <form action="#" th:action="@{'/employees/'+${employee.id}+'/publications/monographs/'+${monograph.id}}"
           th:object="${monograph}"
           method="post">
-<!--        <div class="form-group">-->
-<!--            <label for="title">Title</label>-->
-<!--            <input type="text" th:field="*{title}" class="form-control" aria-describedby="titleHelp"-->
-<!--                   placeholder="Enter monograph title">-->
-<!--            <small id="titleHelp" class="form-text text-muted">Gудет норм, то </small>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--            <label for="exampleInputPassword1">Password</label>-->
-<!--            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">-->
-<!--        </div>-->
-<!--        <div class="form-check">-->
-<!--            <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-<!--            <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
-<!--        </div>-->
 
         <div class="form-group">
             <label for="title">Title</label>
@@ -44,20 +30,20 @@
             <select class="form-control selectpicker" th:field="*{monographType}" name="monographType">
                 <option th:each="monographType : ${T(by.it.academy.scientificactivity.model.MonographType).values()}"
                         th:value="${monographType}"
-                        th:text="${monographType}">Monograph type
+                        th:text="${monographType}">Monograph Type
                 </option>
             </select>
         </div>
         <div class="form-group">
-            <label for="printRun">Print run</label>
+            <label for="printRun">Print Run</label>
             <input type="text" th:field="*{printRun}" class="form-control" placeholder="Enter print run of publication">
         </div>
         <div class="form-group">
-            <label for="numberOfPages">Number of pages</label>
+            <label for="numberOfPages">Number of Pages</label>
             <input type="text" th:field="*{numberOfPages}" class="form-control" placeholder="Enter number of pages of publication">
         </div>
         <div class="form-group">
-            <label for="authors">Select authors</label>
+            <label for="authors">Select Authors</label>
             <select class="form-control selectpicker" th:field="*{authors}" id="authors" multiple>
 
                 <option th:each="employee : ${employees}"

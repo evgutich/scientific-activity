@@ -2,7 +2,6 @@ package by.it.academy.scientificactivity.controller;
 
 import by.it.academy.scientificactivity.model.Department;
 import by.it.academy.scientificactivity.model.Employee;
-import by.it.academy.scientificactivity.model.Publication;
 import by.it.academy.scientificactivity.service.DepartmentService;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import by.it.academy.scientificactivity.service.PublicationService;
@@ -10,8 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -51,7 +52,11 @@ public class EmployeesController {
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute Department department, Employee employee) {
+    public String save(@ModelAttribute Department department, @Valid Employee employee, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("departments", departmentService.getAllDepartments());
+            return "add-employee";
+        }
         employeeService.createEmployee(employee, department.getDepartmentId());
         return "redirect:/employees";
     }
@@ -66,23 +71,11 @@ public class EmployeesController {
     public String showEmployeeProfile(@PathVariable Long employeeId, Model model) {
         model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
         model.addAttribute("monographs", publicationService.getMonographsByAuthorId(employeeId));
-        model.addAttribute("articles", publicationService.getArticles());
+        model.addAttribute("articles", publicationService.getArticlesByAuthorId(employeeId));
+        model.addAttribute("textbooks", publicationService.getTextbooksByAuthorId(employeeId));
+        model.addAttribute("theses", publicationService.getThesesByAuthorId(employeeId));
         model.addAttribute("sort", sortDateMethod);
         log.info("our employee: " + employeeService.getEmployeeById(employeeId));
-        return "employee";
-    }
-
-    @GetMapping("/{employeeId}/sort/{sortDate}")
-    public String showEmployeeProfileSorted(@PathVariable Long employeeId, Model model) {
-        List<Publication> monographs = filterAndSort();
-        model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
-//        model.addAttribute("monographs", publicationService.getMonographsByAuthorId(employeeId));
-        model.addAttribute("monographs", monographs);
-        model.addAttribute("articles", publicationService.getArticles());
-        model.addAttribute("sort", sortDateMethod);
-        log.info("our employee: " + employeeService.getEmployeeById(employeeId));
-
-//        return "redirect:/employees/" + employeeId;
         return "employee";
     }
 
@@ -92,16 +85,4 @@ public class EmployeesController {
         return "edit-monograph";
     }
 
-    private List<Publication> filterAndSort() {
-        List<Publication> publications = null;
-        switch (sortDateMethod) {
-            case "ASC":
-                publications = publicationService.getAllByOrderByEntryDateAsc();
-                break;
-            case "DESC":
-                publications = publicationService.getAllByOrderByEntryDateDesc();
-                break;
-        }
-        return publications;
-    }
 }

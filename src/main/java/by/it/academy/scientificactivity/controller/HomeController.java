@@ -27,4 +27,18 @@ public class HomeController {
         model.addAttribute("employees", allEmployees);
         return "home";
     }
+
+    @GetMapping("/welcome")
+    public String welcomePage(Model model) {
+        List<Employee> allEmployees = employeeService.getAllEmployees();
+        model.addAttribute("employees", allEmployees);
+        return "welcome";
+    }
+
+    @GetMapping("/test")
+    public String testPage(Model model) {
+        List<Employee> allEmployees = employeeService.getAllEmployees();
+        model.addAttribute("employees", allEmployees);
+        return "test";
+    }
 }
