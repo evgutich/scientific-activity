@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "roles")
-public class EmployeeRole {
+public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

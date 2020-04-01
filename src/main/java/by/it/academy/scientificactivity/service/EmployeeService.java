@@ -10,11 +10,13 @@ public interface EmployeeService {
 
     Employee getEmployeeById(Long id);
 
-    Employee getEmployeeByUserName(String userName);
+//    Employee getEmployeeByUserName(String userName);
 
     void deleteEmployee(Long id);
 
     Employee createEmployee(Employee employee, Long departmentId);
 
     Employee updateEmployee(Long employeeId, Employee employee, Long departmentId);
+
+    boolean isUniqueEmployee(Employee employee);
 }

@@ -7,7 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("employees/{employeeId}/publications")
@@ -120,7 +123,12 @@ public class PublicationsController {
     }
 
     @PostMapping("textbooks/save")
-    public String saveTextbook(@PathVariable Long employeeId, @ModelAttribute Textbook textbook) {
+    public String saveTextbook(@PathVariable Long employeeId, @Valid @ModelAttribute Textbook textbook, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            return "add-textbook";
+        }
         publicationService.createPublication(textbook);
         return "redirect:/employees/" + employeeId;
 

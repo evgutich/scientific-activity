@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>New Textbook</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-</head>
+<head th:replace="fragments/head :: head"></head>
+
 <body>
 
 <div class="container">
-    <form action="#" th:action="@{'/employees/'+${employee.id}+'/publications/textbooks/save'}"
+    <form class="needs-validation" novalidate action="#" th:action="@{'/employees/'+${employee.id}+'/publications/textbooks/save'}"
           th:object="${textbook}"
           method="post">
 
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" th:field="*{title}" class="form-control" aria-describedby="titleHelp"
-                   placeholder="Enter title of publication">
-            <small id="titleHelp" class="form-text text-muted">Please, check the spelling of publication</small>
+        <div class="form-group" th:with="titleErr=${#fields.hasErrors('title')}">
+            <input type="text" th:field="*{title}" class="form-control" th:classappend="${titleErr} ? is-invalid : ''"
+                   placeholder="Title"/>
+            <label th:if="${titleErr}" th:errors="*{title}"
+                   class="invalid-feedback"></label>
         </div>
+
+<!--        <div class="form-group">-->
+<!--            <label for="title">Title</label>-->
+<!--            <input type="text" th:field="*{title}" class="form-control" aria-describedby="titleHelp"-->
+<!--                   placeholder="Enter title of publication">-->
+<!--            <small id="titleHelp" class="form-text text-muted">Please, check the spelling of publication</small>-->
+<!--        </div>-->
         <div class="form-group">
             <label for="publisher">Publisher</label>
             <input type="text" th:field="*{publisher}" class="form-control" placeholder="Enter publisher">

@@ -10,21 +10,31 @@
 
 
 <body>
-<h1>New employee</h1>
+
+<div style="clear: both; display: block; height: 10px;"></div>
+
 <div class="row justify-content-md-center">
 
     <div class="col-md-4">
         <form th:object="${employee}" class="needs-validation" novalidate th:action="@{save}" action="#" method="post">
 
-            <div>
-                <input type="text" th:field="*{userName}" class="form-control"
+<!--            <div>-->
+<!--                <input type="text" th:field="*{user.userName}" class="form-control"-->
+<!--                       placeholder="Username"/>-->
+<!--                <label th:if="${#fields.hasErrors('user.userName')}" th:errors="*{user.userName}"-->
+<!--                       class="validation-message" style="font-size: 10pt; color: #FF1C19"></label>-->
+<!--                <div style="clear: both; display: block; height: 10px;"></div>-->
+<!--            </div>-->
+
+            <div class="form-group" th:with="userNameErr=${#fields.hasErrors('user.userName')}">
+                <input type="text" th:field="*{user.userName}" class="form-control" th:classappend="${userNameErr} ? is-invalid : ''"
                        placeholder="Username"/>
-                <label th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
-                       class="validation-message" style="font-size: 10pt; color: #FF1C19"></label>
-                <div style="clear: both; display: block; height: 10px;"></div>
+                <label th:if="${userNameErr}" th:errors="*{user.userName}"
+                       class="invalid-feedback"></label>
             </div>
 
-            <input type="password" th:field="*{password}" class="form-control"
+
+            <input type="password" th:field="*{user.password}" class="form-control"
                    placeholder="Password"/>
             <div style="clear: both; display: block; height: 10px;"></div>
             <input type="text" th:field="*{surname}" class="form-control"

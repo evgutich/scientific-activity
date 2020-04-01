@@ -3,12 +3,8 @@ package by.it.academy.scientificactivity.service.impl;
 import by.it.academy.scientificactivity.exception.DepartmentNotFoundException;
 import by.it.academy.scientificactivity.exception.EmployeeNotFoundException;
 import by.it.academy.scientificactivity.model.Employee;
-import by.it.academy.scientificactivity.model.EmployeeRole;
 import by.it.academy.scientificactivity.model.Publication;
-import by.it.academy.scientificactivity.repository.DepartmentRepository;
-import by.it.academy.scientificactivity.repository.EmployeeRepository;
-import by.it.academy.scientificactivity.repository.PublicationRepository;
-import by.it.academy.scientificactivity.repository.RoleRepository;
+import by.it.academy.scientificactivity.repository.*;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
+    private final UserRepository userRepository;
+
     private final PublicationRepository publicationRepository;
 
     private final DepartmentRepository departmentRepository;
@@ -39,12 +37,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                                PublicationRepository publicationRepository,
                                DepartmentRepository departmentRepository,
                                @Lazy
-                                       BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository) {
+                                       BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository, UserRepository userRepository) {
         this.employeeRepository = employeeRepository;
         this.publicationRepository = publicationRepository;
         this.departmentRepository = departmentRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -60,11 +59,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeByUserName(String userName) {
-        return employeeRepository.findEmployeeByUserName(userName);
-    }
-
-    @Override
     public void deleteEmployee(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
         for (Publication publication : employee.getPublications()) {
@@ -77,9 +71,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee createEmployee(Employee employee, Long departmentId) {
-        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
-        employee.setActive(true);
-        employee.setRoles(new HashSet<EmployeeRole>(Arrays.asList(roleRepository.findEmployeeRoleByRole(ROLE_USER))));
+        employee.getUser().setPassword(bCryptPasswordEncoder.encode(employee.getUser().getPassword()));
+        employee.getUser().setActive(true);
+        employee.getUser().setRoles(new HashSet<>(Arrays.asList(roleRepository.findEmployeeRoleByRole(ROLE_USER))));
         employee.setDepartment(departmentRepository.findById(departmentId).orElseThrow(DepartmentNotFoundException::new));
         return employeeRepository.save(employee);
     }
@@ -87,8 +81,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee updateEmployee(Long employeeId, Employee employee, Long departmentId) {
         Employee newEmployee = employeeRepository.findById(employeeId).orElseThrow(EmployeeNotFoundException::new);
-        newEmployee.setUserName(employee.getUserName());
-        newEmployee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         newEmployee.setSurname(employee.getSurname());
         newEmployee.setName(employee.getName());
         newEmployee.setPatronymic(employee.getPatronymic());
@@ -98,5 +90,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         newEmployee.setDegree(employee.getDegree());
         newEmployee.setAcademicRank(employee.getAcademicRank());
         return employeeRepository.save(newEmployee);
+    }
+
+    @Override
+    public boolean isUniqueEmployee(Employee employee) {
+       return userRepository.findByUserName(employee.getUser().getUserName()) == null;
     }
 }

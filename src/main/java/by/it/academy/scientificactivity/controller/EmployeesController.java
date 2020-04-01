@@ -27,13 +27,10 @@ public class EmployeesController {
 
     private final DepartmentService departmentService;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public EmployeesController(EmployeeService employeeService, PublicationService publicationService, DepartmentService departmentService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.employeeService = employeeService;
         this.publicationService = publicationService;
         this.departmentService = departmentService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping
@@ -52,12 +49,22 @@ public class EmployeesController {
 
     @PostMapping("save")
     public String save(@ModelAttribute Department department, @Valid Employee employee, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+        if (!isUserValid(employee, bindingResult)) {
             model.addAttribute("departments", departmentService.getAllDepartments());
             return "add-employee";
         }
         employeeService.createEmployee(employee, department.getDepartmentId());
         return "redirect:/employees";
+    }
+
+    private boolean isUserValid(Employee employee, BindingResult bindingResult) {
+        if (!employeeService.isUniqueEmployee(employee)) {
+            bindingResult.rejectValue("user.userName", "user.userName", "This username is already registered");
+        }
+        if (bindingResult.hasErrors()) {
+            return false;
+        }
+        return true;
     }
 
     @GetMapping("/{employeeId}/edit")
@@ -73,9 +80,8 @@ public class EmployeesController {
         return "redirect:/employees";
     }
 
-    @PostMapping(value = "/{employeeId}/update" , consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/{employeeId}/update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String updateEmployee(@PathVariable Long employeeId, @ModelAttribute Employee employee, @ModelAttribute Department department) {
-//        Employee employee = employeeService.getEmployeeById(employeeId);
         employeeService.updateEmployee(employeeId, employee, department.getDepartmentId());
         return "redirect:/employees";
     }
@@ -90,11 +96,5 @@ public class EmployeesController {
         log.info("our employee: " + employeeService.getEmployeeById(employeeId));
         return "employee";
     }
-
-//    @GetMapping("/{id}/publications/monographs")
-//    public String monographCreationForm(@PathVariable Long id, Model model) {
-//        model.addAttribute("employee", employeeService.getEmployeeById(id));
-//        return "edit-monograph";
-//    }
 
 }
