@@ -207,8 +207,16 @@ public class PublicationsController {
     @PostMapping(value = "/theses/{thesisId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String editArticle(@PathVariable Long employeeId,
                               @PathVariable Long thesisId,
-                              @ModelAttribute Thesis thesis,
+                              @Valid @ModelAttribute Thesis thesis,
+                              BindingResult bindingResult,
                               Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("thesisId", thesisId);
+            model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            model.addAttribute("thesis", thesis);
+            return "edit-thesis";
+        }
         publicationService.updateThesisForEmployee(employeeId, thesisId, thesis);
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
