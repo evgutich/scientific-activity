@@ -53,7 +53,7 @@
                                         th:text="${#temporals.format(monograph.entryDate, 'd MMM yyyy')}"
                                         style="text-align: center"></span></td>
                                 <td style="text-align: center; vertical-align: middle"><span
-                                        th:text="${monograph.monographType}"></span></td>
+                                        th:text="#{${monograph.monographType.propName}}"></span></td>
                                 <td style="text-align: center; vertical-align: middle"><span
                                         th:text="${monograph.printRun}"></span></td>
                                 <td style="text-align: center; vertical-align: middle"><span
@@ -115,11 +115,11 @@
                                     th:text="${#temporals.format(article.entryDate, 'd MMM yyyy')}"
                                     style="text-align: center"></span></td>
                             <td style="text-align: center; vertical-align: middle"><span
-                                    th:text="${article.articleType}"></span></td>
+                                    th:text="#{${article.articleType.propName}}"></span></td>
                             <td style="text-align: center; vertical-align: middle"><span
-                                    th:text="${article.articleEdition}"></span></td>
+                                    th:text="#{${article.articleEdition.propName}}"></span></td>
                             <td style="text-align: center; vertical-align: middle"><span
-                                    th:text="${article.publicationLanguage}"></span></td>
+                                    th:text="#{${article.publicationLanguage.propName}}"></span></td>
                             <td style="text-align: center">
                                 <a th:href="@{${author.id}}" th:each="author : ${article.authors}">
                                     <div th:text="${author.surname} + ' ' + ${author.name.charAt(0)} + '.' + ${author.patronymic.charAt(0)+ '.'}"></div>
@@ -177,7 +177,7 @@
                                 th:text="${#temporals.format(textbook.entryDate, 'd MMM yyyy')}"
                                 style="text-align: center"></span></td>
                         <td style="text-align: center; vertical-align: middle"><span
-                                th:text="${textbook.textbookType}"></span></td>
+                                th:text="#{${textbook.textbookType.propName}}"></span></td>
                         <td style="text-align: center; vertical-align: middle"><span
                                 th:text="${textbook.printRun}"></span></td>
                         <td style="text-align: center; vertical-align: middle"><span
@@ -237,9 +237,9 @@
                                 th:text="${#temporals.format(thesis.entryDate, 'd MMM yyyy')}"
                                 style="text-align: center"></span></td>
                         <td style="text-align: center; vertical-align: middle"><span
-                                th:text="${thesis.thesisType}"></span></td>
+                                th:text="#{${thesis.thesisType.propName}}"></span></td>
                         <td style="text-align: center; vertical-align: middle"><span
-                                th:text="${thesis.publicationLanguage}"></span></td>
+                                th:text="#{${thesis.publicationLanguage.propName}}"></span></td>
                         <td style="text-align: center">
                             <a th:href="@{${author.id}}" th:each="author : ${thesis.authors}">
                                 <div th:text="${author.surname} + ' ' + ${author.name.charAt(0)} + '.' + ${author.patronymic.charAt(0)+ '.'}"></div>
@@ -283,11 +283,6 @@
         }]
     });
 });</script>
-
-<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js"></script>-->
 
 </body>
 </html>

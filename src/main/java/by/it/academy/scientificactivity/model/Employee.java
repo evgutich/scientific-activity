@@ -42,7 +42,7 @@ public class Employee implements Serializable {
     @NotBlank(message = "*Please provide a surname")
     private String surname;
     @Column(name = "date_of_birth")
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Past(message = "*Date input is invalid for a birth date")
     @NotNull(message = "*Please provide a valid date of birth")
     private LocalDate dateOfBirth;

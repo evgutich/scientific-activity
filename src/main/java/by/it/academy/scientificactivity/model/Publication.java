@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,8 +21,11 @@ public abstract class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Please provide title")
+    @Length(min = 5, message = "*Your title must have at least 5 characters")
+    @NotBlank(message = "*Please provide a title")
     private String title;
+    @Length(min = 5, message = "*Your publisher must have at least 5 characters")
+    @NotBlank(message = "*Please provide a publisher")
     private String publisher;
     @JsonBackReference
     @ManyToMany(cascade = CascadeType.MERGE)

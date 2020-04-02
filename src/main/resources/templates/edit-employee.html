@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Edit Monograph</title>
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -15,8 +13,8 @@
 <div class="row justify-content-md-center">
 
     <div class="col-md-4">
-        <form action="#" th:action="@{'/employees/' + ${employee.id} + '/update'}"
-              th:object="${employee}" class="needs-validation" novalidate
+        <form action="#" th:action="@{'/employees/' + ${employeeId} + '/update'}" class="needs-validation" novalidate
+              th:object="${employee}"
               method="post">
 
             <div style="clear: both; display: block; height: 10px;"></div>
@@ -45,16 +43,17 @@
             </div>
 
             <div class="form-group" th:with="hasErr=${#fields.hasErrors('dateOfBirth')}">
-                <input type="date" value="Date of Birth" th:field="*{dateOfBirth}" class="form-control"
-                       aria-describedby="dateOfBirthHelp" th:classappend="${hasErr} ? is-invalid : ''"
+                <input type="date" value="Date of Birth" th:field="*{dateOfBirth}" aria-describedby="dateOfBirthHelp" class="form-control"
+                       th:classappend="${hasErr} ? is-invalid : ''"
                        placeholder="Date of birth"/>
-                <small id="dateOfBirthHelp" class="form-text text-muted">Please choose date of birth</small>
                 <label th:if="${hasErr}" th:errors="*{dateOfBirth}"
                        class="invalid-feedback"></label>
+                <small id="dateOfBirthHelp" class="form-text text-muted">Please choose date of birth</small>
             </div>
 
             <div class="form-group">
-                <select class="form-control" th:field="*{department}" aria-describedby="departmentHelp" name="departmentId">
+                <select class="form-control" th:field="*{department}" aria-describedby="departmentHelp"
+                        name="departmentId">
                     <option th:each="department : ${departments}"
                             th:value="${department.departmentId}"
                             th:text="${department.departmentName}">Department
@@ -82,7 +81,8 @@
             </div>
 
             <div class="form-group">
-                <select class="form-control" aria-describedby="academicRankHelp" th:field="*{academicRank}" name="academicRank">
+                <select class="form-control" aria-describedby="academicRankHelp" th:field="*{academicRank}"
+                        name="academicRank">
                     <option th:each="academicRank : ${T(by.it.academy.scientificactivity.model.AcademicRank).values()}"
                             th:value="${academicRank}"
                             th:text="#{${academicRank.propName}}">Academic rank

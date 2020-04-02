@@ -81,10 +81,11 @@ public class EmployeesController {
         return "redirect:/employees";
     }
 
-    @PostMapping(value = "/{employeeId}/update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String updateEmployee(@PathVariable Long employeeId, @Valid @ModelAttribute Employee employee, @ModelAttribute Department department, BindingResult bindingResult, Model model) {
-        if (!isUserValid(employee, bindingResult)) {
-            model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+    @PostMapping(value = "/{employeeId}/update")
+    public String updateEmployee(@PathVariable Long employeeId, @ModelAttribute Department department, @Valid Employee employee, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employeeId", employeeId);
+            model.addAttribute("employee", employee);
             model.addAttribute("departments", departmentService.getAllDepartments());
             return "edit-employee";
         }

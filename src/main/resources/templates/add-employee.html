@@ -61,9 +61,8 @@
 
             <div class="form-group" th:with="hasErr=${#fields.hasErrors('dateOfBirth')}">
                 <input type="date" value="Date of Birth" th:field="*{dateOfBirth}" class="form-control"
-                       aria-describedby="dateOfBirthHelp" th:classappend="${hasErr} ? is-invalid : ''"
+                       th:classappend="${hasErr} ? is-invalid : ''"
                        placeholder="Date of birth"/>
-                <small id="dateOfBirthHelp" class="form-text text-muted">Please choose date of birth</small>
                 <label th:if="${hasErr}" th:errors="*{dateOfBirth}"
                        class="invalid-feedback"></label>
             </div>
@@ -97,7 +96,8 @@
             </div>
 
             <div class="form-group">
-                <select class="form-control" aria-describedby="academicRankHelp" th:field="*{academicRank}" name="academicRank">
+                <select class="form-control" aria-describedby="academicRankHelp" th:field="*{academicRank}"
+                        name="academicRank">
                     <option th:each="academicRank : ${T(by.it.academy.scientificactivity.model.AcademicRank).values()}"
                             th:value="${academicRank}"
                             th:text="#{${academicRank.propName}}">Academic rank
