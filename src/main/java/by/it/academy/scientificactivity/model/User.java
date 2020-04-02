@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,11 +23,11 @@ public class User {
 
     @Column(nullable = false, unique = true)
     @Length(min = 5, message = "*Your user name must have at least 5 characters")
-    @NotEmpty(message = "*Please provide a user name")
+    @NotBlank(message = "*Please provide a user name")
     private String userName;
 
     @Length(min = 4, message = "*Your password must have at least 4 characters")
-    @NotEmpty(message = "*Please provide your password")
+    @NotBlank(message = "*Please provide your password")
     private String password;
 
     private Boolean active;

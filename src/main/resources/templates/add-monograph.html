@@ -32,10 +32,17 @@
                 </option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="printRun">Print Run</label>
-            <input type="text" th:field="*{printRun}" class="form-control" placeholder="Enter print run of publication">
+<!--        <div class="form-group">-->
+<!--            <label for="printRun">Print Run</label>-->
+<!--            <input type="text" th:field="*{printRun}" class="form-control" placeholder="Enter print run of publication">-->
+<!--        </div>-->
+        <div class="form-group" th:with="hasErr=${#fields.hasErrors('printRun')}">
+            <input type="text" th:field="*{printRun}" class="form-control" th:classappend="${hasErr} ? is-invalid : ''"
+                   placeholder="Print run"/>
+            <label th:if="${hasErr}" th:errors="*{printRun}"
+                   class="invalid-feedback"></label>
         </div>
+
         <div class="form-group">
             <label for="numberOfPages">Number of Pages</label>
             <input type="text" th:field="*{numberOfPages}" class="form-control" placeholder="Enter number of pages of publication">

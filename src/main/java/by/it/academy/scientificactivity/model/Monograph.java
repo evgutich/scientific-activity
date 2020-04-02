@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotEmpty;
 public class Monograph extends Publication {
     @Enumerated(EnumType.STRING)
     private MonographType monographType;
-    @NotEmpty(message = "*Please provide a print run")
+    @NotNull(message = "Please provide a print run")
     private Integer printRun;
     private Integer numberOfPages;
 }

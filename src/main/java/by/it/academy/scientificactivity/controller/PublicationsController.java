@@ -41,7 +41,12 @@ public class PublicationsController {
     }
 
     @PostMapping("monographs/save")
-    public String saveMonograph(@PathVariable Long employeeId, @ModelAttribute Monograph monograph) {
+    public String saveMonograph(@PathVariable Long employeeId, @Valid @ModelAttribute Monograph monograph, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            return "add-monograph";
+        }
         publicationService.createPublication(monograph);
         return "redirect:/employees/" + employeeId;
 
@@ -82,7 +87,12 @@ public class PublicationsController {
     }
 
     @PostMapping("articles/save")
-    public String saveArticle(@PathVariable Long employeeId, @ModelAttribute Article article) {
+    public String saveArticle(@PathVariable Long employeeId, @Valid @ModelAttribute Article article, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            return "add-article";
+        }
         publicationService.createPublication(article);
         return "redirect:/employees/" + employeeId;
 
@@ -104,9 +114,9 @@ public class PublicationsController {
 
     @PostMapping(value = "/articles/{articleId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String editArticle(@PathVariable Long employeeId,
-                                @PathVariable Long articleId,
-                                @ModelAttribute Article article,
-                                Model model) {
+                              @PathVariable Long articleId,
+                              @ModelAttribute Article article,
+                              Model model) {
         publicationService.updateArticleForEmployee(employeeId, articleId, article);
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
@@ -150,9 +160,9 @@ public class PublicationsController {
 
     @PostMapping(value = "/textbooks/{textbookId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String editTextbook(@PathVariable Long employeeId,
-                                @PathVariable Long textbookId,
-                                @ModelAttribute Textbook textbook,
-                                Model model) {
+                               @PathVariable Long textbookId,
+                               @ModelAttribute Textbook textbook,
+                               Model model) {
         publicationService.updateTextbookForEmployee(employeeId, textbookId, textbook);
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
@@ -169,7 +179,12 @@ public class PublicationsController {
     }
 
     @PostMapping("theses/save")
-    public String saveThesis(@PathVariable Long employeeId, @ModelAttribute Thesis thesis) {
+    public String saveThesis(@PathVariable Long employeeId, @Valid @ModelAttribute Thesis thesis, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            return "add-thesis";
+        }
         publicationService.createPublication(thesis);
         return "redirect:/employees/" + employeeId;
 

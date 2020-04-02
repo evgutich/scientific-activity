@@ -62,6 +62,7 @@ public class EmployeesController {
             bindingResult.rejectValue("user.userName", "user.userName", "This username is already registered");
         }
         if (bindingResult.hasErrors()) {
+            log.info(bindingResult.toString());
             return false;
         }
         return true;
