@@ -82,7 +82,12 @@ public class EmployeesController {
     }
 
     @PostMapping(value = "/{employeeId}/update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String updateEmployee(@PathVariable Long employeeId, @ModelAttribute Employee employee, @ModelAttribute Department department) {
+    public String updateEmployee(@PathVariable Long employeeId, @Valid @ModelAttribute Employee employee, @ModelAttribute Department department, BindingResult bindingResult, Model model) {
+        if (!isUserValid(employee, bindingResult)) {
+            model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+            model.addAttribute("departments", departmentService.getAllDepartments());
+            return "edit-employee";
+        }
         employeeService.updateEmployee(employeeId, employee, department.getDepartmentId());
         return "redirect:/employees";
     }
