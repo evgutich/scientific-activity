@@ -94,6 +94,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean isUniqueEmployee(Employee employee) {
-       return userRepository.findByUserName(employee.getUser().getUserName()) == null;
+        return userRepository.findByUserName(employee.getUser().getUserName()) == null;
     }
 }

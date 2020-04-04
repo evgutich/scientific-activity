@@ -43,7 +43,8 @@
             </div>
 
             <div class="form-group" th:with="hasErr=${#fields.hasErrors('dateOfBirth')}">
-                <input type="date" value="Date of Birth" th:field="*{dateOfBirth}" aria-describedby="dateOfBirthHelp" class="form-control"
+                <input type="date" value="Date of Birth" th:field="*{dateOfBirth}" aria-describedby="dateOfBirthHelp"
+                       class="form-control"
                        th:classappend="${hasErr} ? is-invalid : ''"
                        placeholder="Date of birth"/>
                 <label th:if="${hasErr}" th:errors="*{dateOfBirth}"

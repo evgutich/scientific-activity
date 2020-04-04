@@ -6,7 +6,6 @@ import by.it.academy.scientificactivity.service.DepartmentService;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import by.it.academy.scientificactivity.service.PublicationService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,7 +80,7 @@ public class EmployeesController {
         return "redirect:/employees";
     }
 
-    @PostMapping(value = "/{employeeId}/update")
+    @PostMapping("/{employeeId}/update")
     public String updateEmployee(@PathVariable Long employeeId, @ModelAttribute Department department, @Valid Employee employee, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employeeId", employeeId);

@@ -3,11 +3,9 @@ package by.it.academy.scientificactivity.controller.api;
 import by.it.academy.scientificactivity.model.Employee;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/employees")

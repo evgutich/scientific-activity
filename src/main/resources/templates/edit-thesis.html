@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head"></head>
+<head th:replace="fragments/head :: head">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
 
 <body>
 
@@ -8,7 +10,7 @@
 
 <div class="container">
     <form class="needs-validation" novalidate action="#"
-          th:action="@{'/employees/'+${employee.id}+'/publications/thesis/'+${thesis.id}}"
+          th:action="@{'/employees/'+${employeeId}+'/publications/theses/'+${thesisId}}"
           th:object="${thesis}"
           method="post">
 

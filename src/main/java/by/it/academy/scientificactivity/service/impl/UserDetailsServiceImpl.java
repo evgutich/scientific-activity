@@ -1,7 +1,7 @@
 package by.it.academy.scientificactivity.service.impl;
 
-import by.it.academy.scientificactivity.model.UserRole;
 import by.it.academy.scientificactivity.model.User;
+import by.it.academy.scientificactivity.model.UserRole;
 import by.it.academy.scientificactivity.repository.UserRepository;
 import by.it.academy.scientificactivity.service.EmployeeService;
 import org.springframework.security.core.GrantedAuthority;

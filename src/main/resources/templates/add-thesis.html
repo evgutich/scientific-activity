@@ -26,7 +26,8 @@
         </div>
 
         <div class="form-group">
-            <select class="form-control selectpicker" aria-describedby="thesisTypeHelp" th:field="*{thesisType}" name="thesisType">
+            <select class="form-control selectpicker" aria-describedby="thesisTypeHelp" th:field="*{thesisType}"
+                    name="thesisType">
                 <option th:each="thesisType : ${T(by.it.academy.scientificactivity.model.ThesisType).values()}"
                         th:value="${thesisType}"
                         th:text="#{${thesisType.propName}}">Thesis Type
@@ -36,7 +37,8 @@
         </div>
 
         <div class="form-group">
-            <select class="form-control selectpicker" aria-describedby="publicationLanguageHelp" th:field="*{publicationLanguage}" name="publicationLanguage">
+            <select class="form-control selectpicker" aria-describedby="publicationLanguageHelp"
+                    th:field="*{publicationLanguage}" name="publicationLanguage">
                 <option th:each="publicationLanguage : ${T(by.it.academy.scientificactivity.model.PublicationLanguage).values()}"
                         th:value="${publicationLanguage}"
                         th:text="#{${publicationLanguage.propName}}">Publication Language
@@ -46,7 +48,8 @@
         </div>
 
         <div class="form-group">
-            <select class="form-control selectpicker" aria-describedby="authorsHelp" th:field="*{authors}" id="authors" multiple>
+            <select class="form-control selectpicker" aria-describedby="authorsHelp" th:field="*{authors}" id="authors"
+                    multiple>
 
                 <option th:each="employee : ${employees}"
                         th:value="${employee.id}"

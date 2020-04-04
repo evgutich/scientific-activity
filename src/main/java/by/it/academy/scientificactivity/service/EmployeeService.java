@@ -10,8 +10,6 @@ public interface EmployeeService {
 
     Employee getEmployeeById(Long id);
 
-//    Employee getEmployeeByUserName(String userName);
-
     void deleteEmployee(Long id);
 
     Employee createEmployee(Employee employee, Long departmentId);

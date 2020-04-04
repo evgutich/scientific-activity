@@ -1,7 +1,6 @@
 package by.it.academy.scientificactivity.controller.api;
 
 import by.it.academy.scientificactivity.model.Article;
-import by.it.academy.scientificactivity.model.Monograph;
 import by.it.academy.scientificactivity.service.PublicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

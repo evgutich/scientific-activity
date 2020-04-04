@@ -66,11 +66,19 @@ public class PublicationsController {
         return "redirect:/employees/" + employeeId;
     }
 
-    @PostMapping(value = "/monographs/{monographId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/monographs/{monographId}")
     public String editMonograph(@PathVariable Long employeeId,
                                 @PathVariable Long monographId,
-                                @ModelAttribute Monograph monograph,
+                                @Valid @ModelAttribute Monograph monograph,
+                                BindingResult bindingResult,
                                 Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("monographId", monographId);
+            model.addAttribute("employee", employeeId);
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            model.addAttribute("monograph", monograph);
+            return "edit-monograph";
+        }
         publicationService.updateMonographForEmployee(employeeId, monographId, monograph);
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
@@ -115,8 +123,16 @@ public class PublicationsController {
     @PostMapping(value = "/articles/{articleId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String editArticle(@PathVariable Long employeeId,
                               @PathVariable Long articleId,
-                              @ModelAttribute Article article,
+                              @Valid @ModelAttribute Article article,
+                              BindingResult bindingResult,
                               Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("articleId", articleId);
+            model.addAttribute("employee", employeeId);
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            model.addAttribute("article", article);
+            return "edit-article";
+        }
         publicationService.updateArticleForEmployee(employeeId, articleId, article);
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
@@ -161,8 +177,16 @@ public class PublicationsController {
     @PostMapping(value = "/textbooks/{textbookId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String editTextbook(@PathVariable Long employeeId,
                                @PathVariable Long textbookId,
-                               @ModelAttribute Textbook textbook,
+                               @Valid @ModelAttribute Textbook textbook,
+                               BindingResult bindingResult,
                                Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("textbookId", textbookId);
+            model.addAttribute("employee", employeeId);
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            model.addAttribute("textbook", textbook);
+            return "edit-textbook";
+        }
         publicationService.updateTextbookForEmployee(employeeId, textbookId, textbook);
         Employee employeeById = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employeeById);
@@ -205,14 +229,14 @@ public class PublicationsController {
     }
 
     @PostMapping(value = "/theses/{thesisId}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String editArticle(@PathVariable Long employeeId,
-                              @PathVariable Long thesisId,
-                              @Valid @ModelAttribute Thesis thesis,
-                              BindingResult bindingResult,
-                              Model model) {
+    public String editThesis(@PathVariable Long employeeId,
+                             @PathVariable Long thesisId,
+                             @Valid @ModelAttribute Thesis thesis,
+                             BindingResult bindingResult,
+                             Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("thesisId", thesisId);
-            model.addAttribute("employee", employeeService.getEmployeeById(employeeId));
+            model.addAttribute("employee", employeeId);
             model.addAttribute("employees", employeeService.getAllEmployees());
             model.addAttribute("thesis", thesis);
             return "edit-thesis";
