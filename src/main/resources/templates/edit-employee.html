@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Monograph</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+<div style="clear: both; display: block; height: 10px;"></div>
+<div class="row justify-content-md-center">
+
+    <div class="col-md-4">
+        <form action="#" th:action="@{'/employees/' + ${employeeId} + '/update'}" class="needs-validation" novalidate
+              th:object="${employee}"
+              method="post">
+
+            <div style="clear: both; display: block; height: 10px;"></div>
+
+            <div class="form-group" th:with="hasErr=${#fields.hasErrors('surname')}">
+                <input type="text" th:field="*{surname}" class="form-control"
+                       th:classappend="${hasErr} ? is-invalid : ''"
+                       placeholder="Surname"/>
+                <label th:if="${hasErr}" th:errors="*{surname}"
+                       class="invalid-feedback"></label>
+            </div>
+
+            <div class="form-group" th:with="hasErr=${#fields.hasErrors('name')}">
+                <input type="text" th:field="*{name}" class="form-control" th:classappend="${hasErr} ? is-invalid : ''"
+                       placeholder="Name"/>
+                <label th:if="${hasErr}" th:errors="*{name}"
+                       class="invalid-feedback"></label>
+            </div>
+
+            <div class="form-group" th:with="hasErr=${#fields.hasErrors('patronymic')}">
+                <input type="text" th:field="*{patronymic}" class="form-control"
+                       th:classappend="${hasErr} ? is-invalid : ''"
+                       placeholder="Patronymic"/>
+                <label th:if="${hasErr}" th:errors="*{patronymic}"
+                       class="invalid-feedback"></label>
+            </div>
+
+            <div class="form-group" th:with="hasErr=${#fields.hasErrors('dateOfBirth')}">
+                <input type="date" value="Date of Birth" th:field="*{dateOfBirth}" aria-describedby="dateOfBirthHelp"
+                       class="form-control"
+                       th:classappend="${hasErr} ? is-invalid : ''"
+                       placeholder="Date of birth"/>
+                <label th:if="${hasErr}" th:errors="*{dateOfBirth}"
+                       class="invalid-feedback"></label>
+                <small id="dateOfBirthHelp" class="form-text text-muted">Please choose date of birth</small>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" th:field="*{department}" aria-describedby="departmentHelp"
+                        name="departmentId">
+                    <option th:each="department : ${departments}"
+                            th:value="${department.departmentId}"
+                            th:text="${department.departmentName}">Department
+                    </option>
+                </select>
+                <small id="departmentHelp" class="form-text text-muted">Please choose department</small>
+            </div>
+
+            <div class="form-group" th:with="hasErr=${#fields.hasErrors('position')}">
+                <input type="text" th:field="*{position}" class="form-control"
+                       th:classappend="${hasErr} ? is-invalid : ''"
+                       placeholder="Position"/>
+                <label th:if="${hasErr}" th:errors="*{position}"
+                       class="invalid-feedback"></label>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" aria-describedby="degreeHelp" th:field="*{degree}" name="degree">
+                    <option th:each="degree : ${T(by.it.academy.scientificactivity.model.Degree).values()}"
+                            th:value="${degree}"
+                            th:text="#{${degree.propName}}">Degree
+                    </option>
+                </select>
+                <small id="degreeHelp" class="form-text text-muted">Please choose degree</small>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" aria-describedby="academicRankHelp" th:field="*{academicRank}"
+                        name="academicRank">
+                    <option th:each="academicRank : ${T(by.it.academy.scientificactivity.model.AcademicRank).values()}"
+                            th:value="${academicRank}"
+                            th:text="#{${academicRank.propName}}">Academic rank
+                    </option>
+                </select>
+                <small id="academicRankHelp" class="form-text text-muted">Please choose academic rank</small>
+            </div>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js"></script>
+
+</body>
+</html>
