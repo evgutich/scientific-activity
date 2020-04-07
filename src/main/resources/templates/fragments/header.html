@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
 
-    <title>Hello, world!</title>
+    <title>Navigation</title>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <div class="container">
 
             <!-- ====================nav-left-site==================== -->
-            <a class="navbar-brand" href="#">Scientific Activity</a>
+            <a class="navbar-brand" th:text="#{navbar.scientific.activity}"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -31,25 +31,37 @@
                 <ul class="navbar-nav m-auto">
 
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/employees}">Employees</a>
+                        <a class="nav-link" th:href="@{/myPage}" th:text="#{navbar.my.page}"></a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/publications}">Publications</a>
+                        <a class="nav-link" th:href="@{/employees}" th:text="#{navbar.employees}"></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/publications}" th:text="#{navbar.publications}"></a>
                     </li>
                 </ul>
 
                 <!-- ====================nav-right-site==================== -->
                 <ul class="navbar-nav  my-2 my-lg-0">
 
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/myPage}">My Page</a>
+                    <li class="nav-item dropdown">
+                        <select class="selectpicker" data-width="fit" id="locales">
+                            <option th:text="#{lang.change}"></option>
+                            <option value="en" th:text="#{lang.eng}"></option>
+                            <option value="ru" th:text="#{lang.ru}"></option>
+                        </select>
                     </li>
+
+
                 </ul>
             </div>
         </div>
     </nav>
 
 </div>
+
 </body>
 
 </html>
