@@ -58,13 +58,6 @@
 
 </main>
 
-<span th:text="#{lang.change}"></span>:
-<select id="locales">
-    <option value=""></option>
-    <option value="en" th:text="#{lang.eng}"></option>
-    <option value="ru" th:text="#{lang.ru}"></option>
-</select>
-
 <div th:replace="fragments/footer :: footer"></div>
 
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -75,9 +68,9 @@
             'targets': [6, 7],
             'orderable': false,
         }],
-        // language: {
-        //     url: 'https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json'
-        // }
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json'
+        }
     });
 });</script>
 
